@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>小数のわり算の筆算練習アプリ | jimitas.com - 小学生算数学習ツール</title>
+  <meta name="description" content="jimitas.comが提供する小数対応のわり算の筆算練習アプリ。ドラッグ&ドロップで楽しく学べる小学生向け算数学習ツール。小数第2位まで対応、あまりの求め方も選択可能。" />
+  <meta name="keywords" content="わり算,筆算,小数,算数,小学生,学習,教育,jimitas.com,ドラッグアンドドロップ,練習,勉強" />
+  <meta name="author" content="jimitas.com" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://jimitas.com/wari-hissan/" />
+  <meta property="og:title" content="小数のわり算の筆算練習アプリ | jimitas.com" />
+  <meta property="og:description" content="ドラッグ&ドロップで楽しく学べる小数対応のわり算の筆算練習アプリ。小学生の算数学習をサポートします。" />
+  <meta property="og:site_name" content="jimitas.com" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary" />
+  <meta property="twitter:url" content="https://jimitas.com/wari-hissan/" />
+  <meta property="twitter:title" content="小数のわり算の筆算練習アプリ | jimitas.com" />
+  <meta property="twitter:description" content="ドラッグ&ドロップで楽しく学べる小数対応のわり算の筆算練習アプリ。小学生の算数学習をサポートします。" />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://jimitas.com/wari-hissan/" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="index.js"></script>
+  <style>
+    /* レスポンシブ対応：大画面でのスペース調整 */
+    @media (min-width: 1024px) {
+      #score-pallet {
+        min-height: 100px; /* PC画面では最小高さを設定 */
+      }
+    }
+    @media (max-width: 1023px) {
+      #score-pallet {
+        min-height: auto; /* タブレット以下では自動調整 */
+      }
+    }
+  </style>
+
+  <!-- 構造化データ -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "わり算の筆算練習アプリ",
+      "description": "ドラッグ&ドロップで楽しく学べるわり算の筆算練習アプリ",
+      "url": "https://jimitas.com/wari-hissan/",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "JPY"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "jimitas.com"
+      }
+    }
+    </script>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+  <header class="h3 text-center my-1">算数　小数のわり算の筆算練習アプリ</header>
+  <main class="flex-grow-1">
+    <div class="mx-auto my-1 w-75 bg-body-secondary p-2">
+      <div class="d-flex align-items-center gap-2">
+        <!-- ボタンを左側に横並びに配置 -->
+        <div class="d-flex gap-1">
+          <button type="button" id="btn-question" class="btn btn-danger btn-sm" style="font-size: 0.8em; padding: 0.2rem 0.5rem;">問題を出す</button>
+          <button type="button" id="btn-showAnswer" class="btn btn-success btn-sm" style="font-size: 0.8em; padding: 0.2rem 0.5rem;">答えを見る</button>
+          <button type="button" id="btn-clear" class="btn btn-secondary btn-sm" style="font-size: 0.8em; padding: 0.2rem 0.5rem;">全て消す</button>
+        </div>
+        <!-- セレクトボックスを右側に配置 -->
+        <div class="flex-grow-1">
+          <select id="mode_select" class="form-select form-select-sm">
+            <option value="" selected disabled>問題の種類を選んでください</option>
+            <optgroup label="整数のわり算">
+              <option value="0">（２けた）÷（１けた）商が１けた</option>
+              <option value="1">（２けた）÷（１けた）商が２けた</option>
+              <option value="2">（３けた）÷（１けた）商が２けた</option>
+              <option value="3">（２けた）÷（２けた）商が１けた</option>
+              <option value="4">（３けた）÷（２けた）商が１けた</option>
+              <option value="5">（３けた）÷（２けた）商が２けた</option>
+            </optgroup>
+            <optgroup label="小数÷整数">
+              <option value="10">○○.○÷○（わり進み2回）例: 11.5÷5</option>
+              <option value="11">○○○.○÷○○（わり進み2回）例: 115.5÷55</option>
+            </optgroup>
+            <optgroup label="小数÷小数">
+              <option value="20">○.○÷○.○=○（わり進み1回）例: 4.8÷1.2</option>
+              <option value="21">○○.○÷○.○=○（わり進み1回）例: 12.8÷1.6</option>
+              <option value="22">○○.○÷○.○=○○（わり進み2回）例: 89.3÷1.9</option>
+              <option value="23">○○.○÷○.○=○.○（わり進み2回）例: 36.6÷6.2</option>
+            </optgroup>
+            <optgroup label="特殊な計算">
+              <option value="30">わり進む（割り切れるまで）</option>
+              <option value="31">あまり付き（商は整数）</option>
+            </optgroup>
+          </select>
+          <div id="guidance-text" class="alert alert-info mt-1" style="display:none; padding: 0.3rem; font-size: 0.8em; margin-bottom: 0;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mx-auto w-75 my-1 text-center">
+      <div id="text-box" class="d-flex justify-content-center align-items-center flex-wrap gap-1 py-1">
+        <div>
+          <button type="button" id="btn-make-question" class="btn btn-info btn-sm">作る</button>
+        </div>
+        <div>
+          <input type="number" max="999.99" min="0.01" step="0.01" id="hijosu-input" class="form-control" style="width: 90px; font-size: 1.2rem; padding: 0.25rem 0.5rem;" />
+        </div>
+        <div class="text-center px-1">÷</div>
+        <div>
+          <input type="number" max="99.99" min="0.01" step="0.01" id="josu-input" class="form-control" style="width: 90px; font-size: 1.2rem; padding: 0.25rem 0.5rem;" />
+        </div>
+        <div class="text-center px-1">=</div>
+        <div>
+          <input type="number" id="sho-input" disabled="true" class="form-control" style="width: 90px; font-size: 1.2rem; padding: 0.25rem 0.5rem;" />
+        </div>
+        <div class="text-center px-2">あまり</div>
+        <div>
+          <input type="number" id="amari-input" disabled="true" class="form-control" style="width: 90px; font-size: 1.2rem; padding: 0.25rem 0.5rem;" />
+        </div>
+      </div>
+    </div>
+
+    <div id="decimal-point-guide" class="h6 mb-0" style="min-height: 20px; text-align: center; color: orangered;"></div>
+
+    <div class="mx-auto w-75 text-center">
+      <table id="calc-table" class="mx-auto text-center"></table>
+    </div>
+
+    <div id="text-box2" class="h6 mb-0 mt-0" style="min-height: 20px; text-align: center; color: orangered;"></div>
+
+    <div class="d-flex justify-content-center" style="position: relative;">
+      <div id="num-pallet" class="w-75 d-flex flex-wrap justify-content-center droppable-elem"></div>
+      <!-- ゴミ箱を絶対位置配置で右側に -->
+      <div style="position: absolute; right: 0; top: 0;">
+        <img src="./images/gomibako.png" style="width: 60px; height: 80px" class="droppable-elem" alt="ゴミ箱" />
+      </div>
+    </div>
+
+    <div id="buttons" class="d-flex flex-wrap justify-content-center mb-1">
+      <button type="button" id="btn-erase" class="m-1 btn btn-secondary btn-sm">消す</button>
+      <button type="button" id="btn-hint" class="m-1 btn btn-info btn-sm">ヒント</button>
+      <button type="button" id="btn-check" class="m-1 btn btn-primary btn-sm">答え合わせ</button>
+      <button type="button" id="btn-reset-coins" class="m-1 btn btn-warning btn-sm">コインをリセット</button>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <div id="score-pallet" class="w-75 d-flex justify-content-left flex-wrap"></div>
+    </div>
+  </main>
+
+  <!-- トースト通知用のコンテナ -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="infoToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="8000">
+      <div class="toast-header bg-info text-white">
+        <strong class="me-auto">📚 アプリの使い方</strong>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">
+        小数のわり算の筆算ができます。わられる数・わる数の小数の位を選択でき、あまりの有無や商の求め方も選べます。<br>
+        <span style="color:orangered; font-weight: bold;">✨ 正しい商をたてると、色が変わるサポートつき！</span>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-light mt-1 mb-1">
+    <p class="m-2 h6 ">
+      小数のわり算の筆算ができます。わられる数・わる数の小数の位を選択でき、あまりの有無や商の求め方も選べます。たてる→かける→おろす→ひくの基本的な操作に加えて、小数点の位置を正しく理解することを目指しています。<span style="color:orangered">正しい商をたてると、色が変わるサポートがつき</span>です。
+    </p>
+  </footer>
+  <!-- howler.jsの読み込み -->
+  <script src="howler.min.js"></script>
+
+  <!-- Bootstrap 5 JavaScriptの読み込み -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- <script src="main.js"></script> -->
+</body>
+
+</html>

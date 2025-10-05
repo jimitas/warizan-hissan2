@@ -1,0 +1,446 @@
+body {
+  font-size: 1.6vw;
+  font-family: "UD デジタル 教科書体 NK-B";
+  /* 教育的で温かみのある背景 */
+  background: linear-gradient(180deg, #fef6e4 0%, #f4e4c1 50%, #ffeaa7 100%);
+  min-height: 100vh;
+  position: relative;
+}
+
+/* 手描き風の点線パターン */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(255, 183, 94, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(248, 194, 145, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 20% 80%, rgba(255, 218, 121, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* メインコンテンツを前面に */
+main {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  margin: 10px;
+  padding: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* ヘッダーのデザイン強化 */
+header {
+  position: relative;
+  z-index: 1;
+  color: #2d3436;
+  text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+  padding: 25px 20px;
+  background: linear-gradient(135deg, #ffffff 0%, #ffeaa7 100%);
+  border-radius: 15px;
+  margin: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  font-weight: bold;
+  border: 2px solid #fdcb6e;
+}
+
+/* 小数点を示すアイコンをヘッダーに追加 */
+header::before {
+  content: "📐";
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+
+header::after {
+  content: "📏";
+  margin-left: 10px;
+  font-size: 1.2em;
+}
+
+input {
+  width: 10vw;
+  height: 4vw;
+  line-height: 4vw;
+  font-size: 2vw;
+  text-align: right;
+}
+
+#text-box {
+  height: max(30px, 6vw);
+  font-size: 2vw;
+  line-height: max(20px, 5vw);
+  letter-spacing: 0.2vw;
+  background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+button {
+  width: auto;
+  height: auto;
+  transition: all 0.3s ease;
+}
+
+/* ボタンのカスタマイズ - 温かみのあるパステルカラー */
+.btn-danger {
+  background: linear-gradient(135deg, #ff7675 0%, #fab1a0 100%);
+  border: 1px solid #ff6b6b;
+  color: white;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #55a3ff 0%, #5f9fd8 100%);
+  border: 1px solid #4a90e2;
+  color: white;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+  border: 1px solid #6c5ce7;
+  color: white;
+}
+
+.btn-info {
+  background: linear-gradient(135deg, #48dbfb 0%, #0abde3 100%);
+  border: 1px solid #00a8cc;
+  color: white;
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+  border: 1px solid #7f8c8d;
+  color: white;
+}
+
+.btn-warning {
+  background: linear-gradient(135deg, #f9ca24 0%, #f0b90b 100%);
+  border: 1px solid #f39c12;
+  color: #2d3436;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+td {
+  width: max(50px, 3vw);
+  height: max(50px, 3vw);
+  padding: 0px;
+  font-size: max(30px, 2vw);
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: dotted gray 1px;
+  border-left: dotted gray 1px;
+}
+
+.num {
+  width: max(46px, 2.6vw);
+  height: max(46px, 2.6vw);
+  line-height: max(46px, 2.6vw);
+  font-size: max(30px, 2vw);
+  border: solid 2px #f39c12;
+  border-radius: 10px;
+  color: #2d3436;
+  background: linear-gradient(135deg, #ffffff 0%, #ffe8cc 100%);
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(243, 156, 18, 0.2);
+}
+
+.num:hover {
+  transform: translateY(-2px) rotate(2deg);
+  box-shadow: 0 4px 10px rgba(243, 156, 18, 0.3);
+  background: linear-gradient(135deg, #ffe8cc 0%, #ffffff 100%);
+}
+
+td .num {
+  margin: auto;
+}
+
+tr:nth-child(1) td {
+  border-top: dotted gray 1px;
+}
+
+/* 「）」記号の列 */
+tr td:nth-child(6) {
+  font-size: 35px;
+  vertical-align: text-top;
+  width: 20px;
+  text-align: right;
+}
+
+/* 1行目（商の行）の被除数部分に罫線を引く（列7～13） */
+tr:nth-child(1) td:nth-child(7),
+tr:nth-child(1) td:nth-child(8),
+tr:nth-child(1) td:nth-child(9),
+tr:nth-child(1) td:nth-child(10),
+tr:nth-child(1) td:nth-child(11),
+tr:nth-child(1) td:nth-child(12),
+tr:nth-child(1) td:nth-child(13) {
+  border-bottom: solid black 2px;
+}
+
+td:last-child {
+  border-right: dotted gray 1px;
+}
+
+.diagonal {
+  background-image: linear-gradient(
+    to right top,
+    transparent calc(50% - 0.5px),
+    red 50%,
+    red calc(50% + 0.5px),
+    transparent calc(50% + 1px)
+  ) !important;
+}
+
+/* 小数点に斜線を引くスタイル */
+.decimal-crossed {
+  position: relative;
+}
+
+.decimal-crossed::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(
+    to right top,
+    transparent calc(50% - 1px),
+    red 50%,
+    red calc(50% + 1px),
+    transparent calc(50% + 2px)
+  );
+  pointer-events: none;
+}
+
+img {
+  width: 3vw;
+  height: 3vw;
+  margin: 0.1vw;
+}
+
+#score-pallet {
+  max-height: 10vw; /* コイン3段分が表示できる高さ（コイン3vw×3 + 余白） */
+  min-height: 3.5vw; /* 最小高さを確保してレイアウトの崩れを防ぐ */
+  overflow-y: auto; /* 縦方向にスクロール可能にする */
+  border: 2px dashed #fdcb6e; /* 手描き風の点線 */
+  border-radius: 10px;
+  padding: 0.5vw;
+  background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,237,213,0.95) 100%);
+  box-shadow: inset 0 2px 5px rgba(253, 203, 110, 0.2);
+}
+
+/* 小数点のスタイル強調 */
+td:nth-child(odd) {
+  color: #e17055;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+/* 小数点ガイドのスタイル */
+#decimal-point-guide {
+  font-weight: bold;
+  background: linear-gradient(90deg, transparent, rgba(225, 112, 85, 0.1), transparent);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+#text-box2 {
+  font-weight: bold;
+  background: linear-gradient(90deg, transparent, rgba(225, 112, 85, 0.1), transparent);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.btn {
+  font-size: max(12px, 1vw);
+}
+
+/* フッターのスタイル */
+footer {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,249,250,0.95) 100%);
+  border-radius: 10px;
+  margin: 10px;
+  padding: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* 問題選択エリアのスタイル */
+.bg-body-secondary {
+  background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,249,250,0.95) 100%) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 3px 10px rgba(118, 75, 162, 0.15) !important;
+}
+
+
+/* タブレット用（481px以上768px以下） */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  body {
+    font-size: 2.2vw;
+  }
+
+  input {
+    width: 12vw;
+    height: 5vw;
+    line-height: 5vw;
+    font-size: 2.5vw;
+  }
+
+  #text-box {
+    height: max(40px, 7vw);
+    font-size: 2.5vw;
+    line-height: max(30px, 6vw);
+  }
+
+  td {
+    width: max(60px, 4vw);
+    height: max(60px, 4vw);
+    font-size: max(35px, 2.5vw);
+  }
+
+  .num {
+    width: max(55px, 3.2vw);
+    height: max(55px, 3.2vw);
+    line-height: max(55px, 3.2vw);
+    font-size: max(35px, 2.5vw);
+  }
+
+  img {
+    width: 4vw;
+    height: 4vw;
+    margin: 0.2vw;
+  }
+
+  #score-pallet {
+    max-height: 12vw; /* タブレットでは少し高めに設定 */
+    min-height: 4.5vw;
+  }
+
+  .btn {
+    font-size: max(14px, 1.2vw);
+  }
+}
+
+/* スマホ用（480px以下） */
+@media screen and (max-width: 480px) {
+  body {
+    font-size: 3.5vw;
+  }
+
+  input {
+    width: 15vw;
+    height: 8vw;
+    line-height: 8vw;
+    font-size: 4vw;
+  }
+
+  #text-box {
+    height: max(50px, 10vw);
+    font-size: 4vw;
+    line-height: max(40px, 8vw);
+  }
+
+  td {
+    width: max(45px, 6vw);
+    height: max(45px, 6vw);
+    font-size: max(25px, 4vw);
+  }
+
+  .num {
+    width: max(40px, 5vw);
+    height: max(40px, 5vw);
+    line-height: max(40px, 5vw);
+    font-size: max(25px, 4vw);
+  }
+
+  img {
+    width: 6vw;
+    height: 6vw;
+    margin: 0.3vw;
+  }
+
+  #score-pallet {
+    max-height: 20vw; /* スマホでは画面が小さいので高めに設定 */
+    min-height: 7vw;
+  }
+
+  .btn {
+    font-size: max(10px, 2vw);
+  }
+
+  #btn-make-question{
+    width: 36px;
+    height: 20px;
+    margin-right: 2px;
+    padding: 0;
+    font-size: max(8px, 1vw);
+  }
+}
+
+/* デスクトップ用（1024px以上） */
+@media screen and (min-width: 1024px) {
+  body {
+    font-size: 18px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  input {
+    width: 120px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 24px;
+  }
+
+  #text-box {
+    height: 60px;
+    font-size: 24px;
+    line-height: 50px;
+  }
+
+  td {
+    width: 50px;
+    height: 50px;
+    font-size: 30px;
+  }
+
+  .num {
+    width: 46px;
+    height: 46px;
+    line-height: 46px;
+    font-size: 30px;
+  }
+
+  img {
+    width: 40px;
+    height: 40px;
+    margin: 2px;
+  }
+
+  #score-pallet {
+    max-height: 130px; /* デスクトップでは固定ピクセル値 */
+    min-height: 45px;
+  }
+
+  .btn {
+    font-size: 16px;
+  }
+
+  /* デスクトップでは筆算テーブルを中央寄せで少し大きく */
+  #calc-table {
+    font-size: 1.1em;
+  }
+}
