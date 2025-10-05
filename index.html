@@ -2,6 +2,14 @@
 <html lang="ja">
 
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V7FFVN1PPN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-V7FFVN1PPN');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>小数のわり算の筆算練習アプリ | jimitas.com - 小学生算数学習ツール</title>
@@ -33,12 +41,15 @@
     /* レスポンシブ対応：大画面でのスペース調整 */
     @media (min-width: 1024px) {
       #score-pallet {
-        min-height: 100px; /* PC画面では最小高さを設定 */
+        min-height: 100px;
+        /* PC画面では最小高さを設定 */
       }
     }
+
     @media (max-width: 1023px) {
       #score-pallet {
-        min-height: auto; /* タブレット以下では自動調整 */
+        min-height: auto;
+        /* タブレット以下では自動調整 */
       }
     }
   </style>
