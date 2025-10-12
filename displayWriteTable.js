@@ -100,6 +100,55 @@ export function displayWriteTable(randomNumberArray) {
     }
   }
 
+  // 自由配置モード（mode === ""）の処理
+  if (mode === "") {
+    console.log("自由配置モード - ドロップエリアと罫線を設定");
+
+    // ドロップエリア: i=0,2,3,4,5,6,7, j=6,7,8,9,10,11,12（すべての列）
+    const freeRows = [0, 2, 3, 4, 5, 6, 7];
+
+    for (let i of freeRows) {
+      if (TBL.rows[i]) {
+        for (let j = 6; j <= 12; j++) {
+          if (TBL.rows[i].cells[j]) {
+            TBL.rows[i].cells[j].setAttribute("class", "droppable-elem");
+            TBL.rows[i].cells[j].style.backgroundColor = "antiqueWhite";
+          }
+        }
+      }
+    }
+
+    // 罫線
+    // i=2: j=6～10
+    if (TBL.rows[2]) {
+      for (let j = 6; j <= 10; j++) {
+        if (TBL.rows[2].cells[j]) {
+          TBL.rows[2].cells[j].style.borderBottom = "solid black 2px";
+        }
+      }
+    }
+
+    // i=4: j=8～12
+    if (TBL.rows[4]) {
+      for (let j = 8; j <= 12; j++) {
+        if (TBL.rows[4].cells[j]) {
+          TBL.rows[4].cells[j].style.borderBottom = "solid black 2px";
+        }
+      }
+    }
+
+    // i=6: j=10～12
+    if (TBL.rows[6]) {
+      for (let j = 10; j <= 12; j++) {
+        if (TBL.rows[6].cells[j]) {
+          TBL.rows[6].cells[j].style.borderBottom = "solid black 2px";
+        }
+      }
+    }
+
+    return; // 自由配置モードの場合はここで終了
+  }
+
   // モード別の処理
   // 小数のわり算（mode 10以降）も各パターンに応じてハードコーディング
   if (parseInt(mode) >= 10) {
@@ -414,7 +463,52 @@ export function displayWriteTable(randomNumberArray) {
         break;
 
       default:
-        // その他のモードは汎用的な処理を使用
+        // 自由配置モード（mode === ""）
+        if (mode === "") {
+          console.log("自由配置モード - ドロップエリアと罫線を設定");
+
+          // ドロップエリア: i=0,2,3,4,5,6,7, j=6,7,8,9,10,11,12（すべての列）
+          const freeRows = [0, 2, 3, 4, 5, 6, 7];
+
+          for (let i of freeRows) {
+            if (TBL.rows[i]) {
+              for (let j = 6; j <= 12; j++) {
+                if (TBL.rows[i].cells[j]) {
+                  TBL.rows[i].cells[j].setAttribute("class", "droppable-elem");
+                  TBL.rows[i].cells[j].style.backgroundColor = "antiqueWhite";
+                }
+              }
+            }
+          }
+
+          // 罫線
+          // i=2: j=6～10
+          if (TBL.rows[2]) {
+            for (let j = 6; j <= 10; j++) {
+              if (TBL.rows[2].cells[j]) {
+                TBL.rows[2].cells[j].style.borderBottom = "solid black 2px";
+              }
+            }
+          }
+
+          // i=4: j=8～12
+          if (TBL.rows[4]) {
+            for (let j = 8; j <= 12; j++) {
+              if (TBL.rows[4].cells[j]) {
+                TBL.rows[4].cells[j].style.borderBottom = "solid black 2px";
+              }
+            }
+          }
+
+          // i=6: j=10～12
+          if (TBL.rows[6]) {
+            for (let j = 10; j <= 12; j++) {
+              if (TBL.rows[6].cells[j]) {
+                TBL.rows[6].cells[j].style.borderBottom = "solid black 2px";
+              }
+            }
+          }
+        }
         break;
     }
     return; // 小数のわり算の場合はここで終了
