@@ -291,38 +291,38 @@ export function createRandomNumber() {
       amari = 0; // 割り切れる
       break;
 
-    case "31": // あまり付き（商は整数）
-      // 除数か被除数のどちらかが必ず小数になるようにする
-      const pattern31 = Math.random();
+    case "31": // あまり付き（商は整数、整数まで割り進んだ後あまりを求める）
+      let attempts31 = 0;
+      do {
+        // 商を34～95のランダムな整数に設定
+        sho = Math.floor(Math.random() * 62) + 34; // 34～95
 
-      if (pattern31 < 0.5) {
-        // パターン1: 小数÷小数（例: 18.5 ÷ 3.2 = 5 あまり 2.5）
-        josu = (Math.floor(Math.random() * 99) + 1) / 10; // 0.1～9.9
-        // 商は整数1～9
-        sho = Math.floor(Math.random() * 9) + 1;
-        // あまりは除数より小さい値（0.1～josu-0.1）
-        const maxAmari31_1 = Math.floor((josu - 0.1) * 10);
-        amari = (Math.floor(Math.random() * maxAmari31_1) + 1) / 10;
-        amari = Math.min(amari, josu - 0.1); // 除数より確実に小さくする
+        // 除数を3～9のランダムな整数に設定
+        josu = Math.floor(Math.random() * 7) + 3; // 3～9
+
+        // あまりを0.1～除数未満のランダムな小数に設定（小数第1位まで）
+        // 例: 除数が6なら、0.1～5.9
+        const maxAmariInt = josu - 1; // 除数-1の整数部分（例: 6なら5）
+        const amariInt = Math.floor(Math.random() * maxAmariInt); // 0～(除数-2)
+        const amariDec = Math.floor(Math.random() * 9) + 1; // 1～9（小数第1位）
+        amari = amariInt + amariDec / 10;
         amari = Math.round(amari * 10) / 10;
-        // 被除数 = 商×除数 + あまり
-        const shoTimesJosu31_1 = Math.round(sho * josu * 10) / 10;
-        hijosu = shoTimesJosu31_1 + amari;
+
+        // 被除数 = 商 × 除数 + あまり
+        hijosu = sho * josu + amari;
         hijosu = Math.round(hijosu * 10) / 10;
-      } else {
-        // パターン2: 小数÷整数（例: 23.5 ÷ 4 = 5 あまり 3.5）
-        josu = Math.floor(Math.random() * 8 + 2); // 2～9（整数）
-        // 商は整数1～9
-        sho = Math.floor(Math.random() * 9) + 1;
-        // あまりは除数より小さい小数（0.1～josu-0.1）
-        const maxAmari31_2 = Math.floor((josu - 0.1) * 10);
-        amari = (Math.floor(Math.random() * maxAmari31_2) + 1) / 10;
-        amari = Math.round(amari * 10) / 10;
-        // 被除数 = 商×除数 + あまり
-        const shoTimesJosu31_2 = sho * josu; // 整数×整数なので誤差なし
-        hijosu = shoTimesJosu31_2 + amari;
-        hijosu = Math.round(hijosu * 10) / 10;
-      }
+
+        // 被除数の1桁目（最上位の数字）を取得
+        const hijosuStr = String(hijosu);
+        const hijosuFirstDigit = parseInt(hijosuStr[0]);
+
+        attempts31++;
+
+        // 被除数の1桁目 < 除数 なら条件を満たす
+        if (hijosuFirstDigit < josu) {
+          break;
+        }
+      } while (attempts31 < 100);
       break;
 
     default:

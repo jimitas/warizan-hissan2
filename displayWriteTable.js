@@ -128,16 +128,16 @@ export function displayWriteTable(randomNumberArray) {
             }
           }
         }
-        // 罫線
+        // 罫線（すべての列に引く）
         if (TBL.rows[2]) {
-          for (let j = 6; j <= 10; j += 2) {
+          for (let j = 6; j <= 10; j++) {
             if (TBL.rows[2].cells[j]) {
               TBL.rows[2].cells[j].style.borderBottom = "solid black 2px";
             }
           }
         }
         if (TBL.rows[4]) {
-          for (let j = 8; j <= 10; j += 2) {
+          for (let j = 8; j <= 10; j++) {
             if (TBL.rows[4].cells[j]) {
               TBL.rows[4].cells[j].style.borderBottom = "solid black 2px";
             }
@@ -161,16 +161,16 @@ export function displayWriteTable(randomNumberArray) {
             }
           }
         }
-        // 罫線
+        // 罫線（すべての列に引く）
         if (TBL.rows[2]) {
-          for (let j = 6; j <= 12; j += 2) {
+          for (let j = 6; j <= 12; j++) {
             if (TBL.rows[2].cells[j]) {
               TBL.rows[2].cells[j].style.borderBottom = "solid black 2px";
             }
           }
         }
         if (TBL.rows[4]) {
-          for (let j = 8; j <= 12; j += 2) {
+          for (let j = 8; j <= 12; j++) {
             if (TBL.rows[4].cells[j]) {
               TBL.rows[4].cells[j].style.borderBottom = "solid black 2px";
             }
@@ -192,9 +192,9 @@ export function displayWriteTable(randomNumberArray) {
             }
           }
         }
-        // 罫線
+        // 罫線（すべての列に引く）
         if (TBL.rows[2]) {
-          for (let j = 6; j <= 8; j += 2) {
+          for (let j = 6; j <= 8; j++) {
             if (TBL.rows[2].cells[j]) {
               TBL.rows[2].cells[j].style.borderBottom = "solid black 2px";
             }
@@ -216,9 +216,9 @@ export function displayWriteTable(randomNumberArray) {
             }
           }
         }
-        // 罫線
+        // 罫線（すべての列に引く）
         if (TBL.rows[2]) {
-          for (let j = 6; j <= 10; j += 2) {
+          for (let j = 6; j <= 10; j++) {
             if (TBL.rows[2].cells[j]) {
               TBL.rows[2].cells[j].style.borderBottom = "solid black 2px";
             }
@@ -242,16 +242,16 @@ export function displayWriteTable(randomNumberArray) {
             }
           }
         }
-        // 罫線
+        // 罫線（すべての列に引く）
         if (TBL.rows[2]) {
-          for (let j = 6; j <= 10; j += 2) {
+          for (let j = 6; j <= 10; j++) {
             if (TBL.rows[2].cells[j]) {
               TBL.rows[2].cells[j].style.borderBottom = "solid black 2px";
             }
           }
         }
         if (TBL.rows[4]) {
-          for (let j = 6; j <= 10; j += 2) {
+          for (let j = 6; j <= 10; j++) {
             if (TBL.rows[4].cells[j]) {
               TBL.rows[4].cells[j].style.borderBottom = "solid black 2px";
             }
@@ -275,16 +275,16 @@ export function displayWriteTable(randomNumberArray) {
             }
           }
         }
-        // 罫線
+        // 罫線（すべての列に引く）
         if (TBL.rows[2]) {
-          for (let j = 6; j <= 12; j += 2) {
+          for (let j = 6; j <= 12; j++) {
             if (TBL.rows[2].cells[j]) {
               TBL.rows[2].cells[j].style.borderBottom = "solid black 2px";
             }
           }
         }
         if (TBL.rows[4]) {
-          for (let j = 8; j <= 12; j += 2) {
+          for (let j = 8; j <= 12; j++) {
             if (TBL.rows[4].cells[j]) {
               TBL.rows[4].cells[j].style.borderBottom = "solid black 2px";
             }
@@ -333,26 +333,26 @@ export function displayWriteTable(randomNumberArray) {
             }
           }
         }
-        // 罫線（Underline areas）
-        // i=2: j=6,8,10
+        // 罫線（Underline areas）すべての列に引く
+        // i=2: j=6,7,8,9,10
         if (TBL.rows[2]) {
-          for (let j = 6; j <= 10; j += 2) {
+          for (let j = 6; j <= 10; j++) {
             if (TBL.rows[2].cells[j]) {
               TBL.rows[2].cells[j].style.borderBottom = "solid black 2px";
             }
           }
         }
-        // i=4: j=8,10,12
+        // i=4: j=8,9,10,11,12
         if (TBL.rows[4]) {
-          for (let j = 8; j <= 12; j += 2) {
+          for (let j = 8; j <= 12; j++) {
             if (TBL.rows[4].cells[j]) {
               TBL.rows[4].cells[j].style.borderBottom = "solid black 2px";
             }
           }
         }
-        // i=6: j=10,12
+        // i=6: j=10,11,12
         if (TBL.rows[6]) {
-          for (let j = 10; j <= 12; j += 2) {
+          for (let j = 10; j <= 12; j++) {
             if (TBL.rows[6].cells[j]) {
               TBL.rows[6].cells[j].style.borderBottom = "solid black 2px";
             }
@@ -360,58 +360,52 @@ export function displayWriteTable(randomNumberArray) {
         }
         break;
 
-      case "31": // あまり付き（商は整数）
-        // 商の桁数に応じて処理、最後の行はあまり（除数の桁数分）
-        const shoDigitsMode31 = shoStr.replace(".", "").length;
-        const josuDigitsMode31 = josuArray.filter(char => char !== ".").length;
-
+      case "31": // あまり付き（商は整数34～95、整数まで割り進んだ後あまりを求める）
+        // 商は34～95の2桁整数（固定）
+        // Drop areas:
+        // i=0: j=8,10（商の2桁）
+        // i=2: j=6,8（1回目かける）
+        // i=3,4: j=8,10（1回目ひく、2回目かける）
+        // i=5: j=10,12（2回目ひく＝あまり）
+        // Underline areas:
+        // i=2: j=6,7,8,9,10
+        // i=4: j=8,9,10,11,12
         for (let i = 0; i < rows; i++) {
           for (let j = 6; j <= 12; j += 2) {
-            // 商の配置（整数）
-            if (i === 0) {
-              if ((shoDigitsMode31 === 1 && j === 8) ||
-                  (shoDigitsMode31 === 2 && (j === 6 || j === 8))) {
-                TBL.rows[i].cells[j].setAttribute("class", "droppable-elem");
-                TBL.rows[i].cells[j].style.backgroundColor = "antiqueWhite";
-              }
+            // 商の配置（i=0: j=8,10）
+            if (i === 0 && (j === 8 || j === 10)) {
+              TBL.rows[i].cells[j].setAttribute("class", "droppable-elem");
+              TBL.rows[i].cells[j].style.backgroundColor = "antiqueWhite";
             }
-            // 筆算部分
-            if (shoDigitsMode31 === 1) {
-              if ((i === 2 || i === 3) && (j === 6 || j === 8)) { // かける・ひく：2桁分（最後があまり）
-                TBL.rows[i].cells[j].setAttribute("class", "droppable-elem");
-                TBL.rows[i].cells[j].style.backgroundColor = "antiqueWhite";
-              }
-              // あまりは最後のひく行（3行目）の右端
-              if (i === 3 && josuDigitsMode31 === 1 && j === 8) { // 除数1桁なら1桁分
-                // 既に設定済み
-              } else if (i === 3 && josuDigitsMode31 === 2 && (j === 6 || j === 8)) { // 除数2桁なら2桁分
-                // 既に設定済み
-              }
-            } else if (shoDigitsMode31 === 2) {
-              if (((i === 2 || i === 3) && (j === 6 || j === 8)) || // 1回目：2桁分
-                  ((i === 4 || i === 5) && (j === 8 || j === 10))) { // 2回目：2桁分
-                TBL.rows[i].cells[j].setAttribute("class", "droppable-elem");
-                TBL.rows[i].cells[j].style.backgroundColor = "antiqueWhite";
-              }
-              // あまりは最後のひく行（5行目）の右端
-              if (i === 5 && josuDigitsMode31 === 1 && j === 10) { // 除数1桁なら1桁分
-                // 既に設定済み
-              } else if (i === 5 && josuDigitsMode31 === 2 && (j === 8 || j === 10)) { // 除数2桁なら2桁分
-                // 既に設定済み
-              }
+            // i=2: j=6,8（1回目かける）
+            if (i === 2 && (j === 6 || j === 8)) {
+              TBL.rows[i].cells[j].setAttribute("class", "droppable-elem");
+              TBL.rows[i].cells[j].style.backgroundColor = "antiqueWhite";
+            }
+            // i=3,4: j=8,10（1回目ひく、2回目かける）
+            if ((i === 3 || i === 4) && (j === 8 || j === 10)) {
+              TBL.rows[i].cells[j].setAttribute("class", "droppable-elem");
+              TBL.rows[i].cells[j].style.backgroundColor = "antiqueWhite";
+            }
+            // i=5: j=10,12（2回目ひく＝あまり）
+            if (i === 5 && (j === 10 || j === 12)) {
+              TBL.rows[i].cells[j].setAttribute("class", "droppable-elem");
+              TBL.rows[i].cells[j].style.backgroundColor = "antiqueWhite";
             }
           }
         }
-        // 罫線
+        // 罫線（Underline areas）
+        // i=2: j=6,7,8,9,10
         if (TBL.rows[2]) {
-          for (let j = 6; j <= 8; j += 2) {
+          for (let j = 6; j <= 10; j++) {
             if (TBL.rows[2].cells[j]) {
               TBL.rows[2].cells[j].style.borderBottom = "solid black 2px";
             }
           }
         }
-        if (shoDigitsMode31 === 2 && TBL.rows[4]) {
-          for (let j = 8; j <= 10; j += 2) {
+        // i=4: j=8,9,10,11,12
+        if (TBL.rows[4]) {
+          for (let j = 8; j <= 12; j++) {
             if (TBL.rows[4].cells[j]) {
               TBL.rows[4].cells[j].style.borderBottom = "solid black 2px";
             }
@@ -443,9 +437,9 @@ export function displayWriteTable(randomNumberArray) {
             }
           }
         }
-        // 罫線を追加
+        // 罫線を追加（すべての列に引く）
         if (TBL.rows[2]) {
-          for (let j = 6; j <= 8; j += 2) {
+          for (let j = 6; j <= 8; j++) {
             if (TBL.rows[2].cells[j]) {
               TBL.rows[2].cells[j].style.borderBottom = "solid black 2px";
             }
@@ -464,16 +458,16 @@ export function displayWriteTable(randomNumberArray) {
             }
           }
         }
-        // 罫線を追加
+        // 罫線を追加（すべての列に引く）
         if (TBL.rows[2]) {
-          for (let j = 6; j <= 8; j += 2) {
+          for (let j = 6; j <= 8; j++) {
             if (TBL.rows[2].cells[j]) {
               TBL.rows[2].cells[j].style.borderBottom = "solid black 2px";
             }
           }
         }
         if (TBL.rows[4]) {
-          for (let j = 6; j <= 8; j += 2) {
+          for (let j = 6; j <= 8; j++) {
             if (TBL.rows[4].cells[j]) {
               TBL.rows[4].cells[j].style.borderBottom = "solid black 2px";
             }
@@ -493,16 +487,16 @@ export function displayWriteTable(randomNumberArray) {
             }
           }
         }
-        // 罫線を追加
+        // 罫線を追加（すべての列に引く）
         if (TBL.rows[2]) {
-          for (let j = 6; j <= 8; j += 2) {
+          for (let j = 6; j <= 8; j++) {
             if (TBL.rows[2].cells[j]) {
               TBL.rows[2].cells[j].style.borderBottom = "solid black 2px";
             }
           }
         }
         if (TBL.rows[4]) {
-          for (let j = 8; j <= 10; j += 2) {
+          for (let j = 8; j <= 10; j++) {
             if (TBL.rows[4].cells[j]) {
               TBL.rows[4].cells[j].style.borderBottom = "solid black 2px";
             }
@@ -521,9 +515,9 @@ export function displayWriteTable(randomNumberArray) {
             }
           }
         }
-        // 罫線を追加
+        // 罫線を追加（すべての列に引く）
         if (TBL.rows[2]) {
-          for (let j = 6; j <= 8; j += 2) {
+          for (let j = 6; j <= 8; j++) {
             if (TBL.rows[2].cells[j]) {
               TBL.rows[2].cells[j].style.borderBottom = "solid black 2px";
             }
@@ -543,9 +537,9 @@ export function displayWriteTable(randomNumberArray) {
             }
           }
         }
-        // 罫線を追加
+        // 罫線を追加（すべての列に引く）
         if (TBL.rows[2]) {
-          for (let j = 6; j <= 10; j += 2) {
+          for (let j = 6; j <= 10; j++) {
             if (TBL.rows[2].cells[j]) {
               TBL.rows[2].cells[j].style.borderBottom = "solid black 2px";
             }
@@ -564,16 +558,16 @@ export function displayWriteTable(randomNumberArray) {
             }
           }
         }
-        // 罫線を追加
+        // 罫線を追加（すべての列に引く）
         if (TBL.rows[2]) {
-          for (let j = 6; j <= 10; j += 2) {
+          for (let j = 6; j <= 10; j++) {
             if (TBL.rows[2].cells[j]) {
               TBL.rows[2].cells[j].style.borderBottom = "solid black 2px";
             }
           }
         }
         if (TBL.rows[4]) {
-          for (let j = 8; j <= 10; j += 2) {
+          for (let j = 8; j <= 10; j++) {
             if (TBL.rows[4].cells[j]) {
               TBL.rows[4].cells[j].style.borderBottom = "solid black 2px";
             }
