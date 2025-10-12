@@ -4,7 +4,7 @@ export function displayInputNumber(randomNumberArray) {
   document.getElementById("josu-input").value = josu;
   document.getElementById("sho-input").value = null;
   document.getElementById("amari-input").value = null;
-  
+
   document.getElementById("hijosu-input").disabled = true;
   document.getElementById("josu-input").disabled = true;
   document.getElementById("sho-input").disabled = false;

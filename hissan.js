@@ -102,7 +102,8 @@ export function hissan() {
     [hijosu, josu, sho, amari] = randomNumberArray;
 
     // 問題に応じた最適なテーブルサイズを計算して再作成
-    const { rows, cols } = calculateTableSize(hijosu, josu, sho);
+    const mode = document.getElementById("mode_select").value;
+    const { rows, cols } = calculateTableSize(hijosu, josu, sho, mode);
     createTable(rows, cols);
 
     point_flag = false;
@@ -115,14 +116,15 @@ export function hissan() {
   // 自分で問題を作成する。
   document.getElementById("btn-make-question").addEventListener(
     "click",
-    () => {
-      const makeNumberArray = makeQuestion(mondai_flag);
+    async () => {
+      const makeNumberArray = await makeQuestion(mondai_flag);
 
       if (makeNumberArray) {
         [hijosu, josu, sho, amari, mondai_flag] = makeNumberArray;
 
         // 問題に応じた最適なテーブルサイズを計算して再作成
-        const { rows, cols } = calculateTableSize(hijosu, josu, sho);
+        const mode = document.getElementById("mode_select").value;
+        const { rows, cols } = calculateTableSize(hijosu, josu, sho, mode);
         createTable(rows, cols);
 
         point_flag = false;
