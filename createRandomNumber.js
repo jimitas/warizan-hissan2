@@ -240,16 +240,55 @@ export function createRandomNumber() {
       break;
 
     // ========== 特殊な計算 ==========
-    case "30": // わり進む（割り切れるまで、最大3回）
-      // 除数は2～9の整数
-      josu = Math.floor(Math.random() * 8 + 2);
-      // 商は小数第1～3位で割り切れる
-      const decimalPlaces = Math.floor(Math.random() * 3) + 1; // 1, 2, 3
-      const multiplier = Math.pow(10, decimalPlaces);
-      sho = (Math.floor(Math.random() * 999) + 1) / multiplier;
-      amari = 0;
-      hijosu = sho * josu;
-      hijosu = Math.round(hijosu * multiplier) / multiplier;
+    case "30": // ○.○○（わり進み3回）例: 6.18÷3=2.06
+      // 商を3.34～9.99の範囲で生成（必ず小数第2位まで値がある）
+      // 3.34 × 3 = 10.02 なので、被除数は必ず10以上になる
+      let attempts30 = 0;
+      do {
+        let sho30Int = Math.floor(Math.random() * 7) + 3; // 3～9
+        let sho30Dec1 = Math.floor(Math.random() * 10); // 0～9（小数第1位）
+        let sho30Dec2 = Math.floor(Math.random() * 10); // 0～9（小数第2位）
+
+        // 小数第2位が0の場合は1～9にする
+        if (sho30Dec2 === 0) {
+          sho30Dec2 = Math.floor(Math.random() * 9) + 1; // 1～9
+        }
+        // 小数第1位と第2位がともに0の場合は両方とも非ゼロにする
+        if (sho30Dec1 === 0 && sho30Dec2 <= 1) {
+          sho30Dec1 = Math.floor(Math.random() * 9) + 1; // 1～9
+          sho30Dec2 = Math.floor(Math.random() * 9) + 1; // 1～9
+        }
+        // 3の場合は、3.34以上になるように調整
+        if (sho30Int === 3 && sho30Dec1 < 3) {
+          sho30Dec1 = Math.floor(Math.random() * 7) + 3; // 3～9
+        }
+        if (sho30Int === 3 && sho30Dec1 === 3 && sho30Dec2 < 4) {
+          sho30Dec2 = Math.floor(Math.random() * 6) + 4; // 4～9
+        }
+
+        sho = sho30Int + sho30Dec1 / 10 + sho30Dec2 / 100;
+        sho = Math.round(sho * 100) / 100;
+
+        // 除数を3～9の整数でランダムに決定
+        josu = Math.floor(Math.random() * 7) + 3; // 3～9
+
+        // 被除数 = 商 × 除数
+        hijosu = sho * josu;
+        hijosu = Math.round(hijosu * 100) / 100;
+
+        // 被除数の1桁目（最上位の数字）を取得
+        const hijosuStr = String(hijosu);
+        const hijosuFirstDigit = parseInt(hijosuStr[0]);
+
+        attempts30++;
+
+        // 被除数の1桁目 < 除数 なら条件を満たす
+        if (hijosuFirstDigit < josu) {
+          break;
+        }
+      } while (attempts30 < 100);
+
+      amari = 0; // 割り切れる
       break;
 
     case "31": // あまり付き（商は整数）

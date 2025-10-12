@@ -292,54 +292,66 @@ export function displayWriteTable(randomNumberArray) {
         }
         break;
 
-      case "30": // わり進む（割り切れるまで）
-        // 商の桁数に応じて動的に処理
-        // 1回わり進み：商2桁
-        // 2回わり進み：商3桁
-        // 3回わり進み：商4桁
-        const shoDigitsMode30 = shoStr.replace(".", "").length;
+      case "30": // ○.○○（わり進み3回）例: 6.18÷3=2.06
+        // 商は○.○○（3桁：整数1桁、小数2桁）
+        // Drop areas:
+        // i=0: j=8,10,12（商の3桁）
+        // i=2: j=6,8（1回目かける）
+        // i=3,4: j=8,10（1回目ひく、2回目かける）
+        // i=5,6: j=10,12（2回目ひく、3回目かける）
+        // i=7: j=12（3回目ひく）
+        // Underline areas:
+        // i=2: j=6,8,10
+        // i=4: j=8,10,12
+        // i=6: j=10,12
         for (let i = 0; i < rows; i++) {
           for (let j = 6; j <= 12; j += 2) {
-            // 商の配置
-            if (i === 0) {
-              if ((shoDigitsMode30 === 2 && (j === 6 || j === 8)) ||
-                  (shoDigitsMode30 === 3 && (j === 6 || j === 8 || j === 10)) ||
-                  (shoDigitsMode30 === 4 && (j === 6 || j === 8 || j === 10 || j === 12))) {
-                TBL.rows[i].cells[j].setAttribute("class", "droppable-elem");
-                TBL.rows[i].cells[j].style.backgroundColor = "antiqueWhite";
-              }
-            }
-            // 筆算部分
-            if ((i === 2 || i === 3) && (j === 6 || j === 8)) { // 1回目：2桁分
+            // 商の配置（i=0: j=8,10,12）
+            if (i === 0 && (j === 8 || j === 10 || j === 12)) {
               TBL.rows[i].cells[j].setAttribute("class", "droppable-elem");
               TBL.rows[i].cells[j].style.backgroundColor = "antiqueWhite";
             }
-            if (shoDigitsMode30 >= 2 && rows > 4 && (i === 4 || i === 5) && (j === 8 || j === 10)) { // 2回目：2桁分
+            // i=2: j=6,8（1回目かける）
+            if (i === 2 && (j === 6 || j === 8)) {
               TBL.rows[i].cells[j].setAttribute("class", "droppable-elem");
               TBL.rows[i].cells[j].style.backgroundColor = "antiqueWhite";
             }
-            if (shoDigitsMode30 >= 3 && rows > 6 && (i === 6 || i === 7) && (j === 10 || j === 12)) { // 3回目：2桁分
+            // i=3,4: j=8,10（1回目ひく、2回目かける）
+            if ((i === 3 || i === 4) && (j === 8 || j === 10)) {
+              TBL.rows[i].cells[j].setAttribute("class", "droppable-elem");
+              TBL.rows[i].cells[j].style.backgroundColor = "antiqueWhite";
+            }
+            // i=5,6: j=10,12（2回目ひく、3回目かける）
+            if ((i === 5 || i === 6) && (j === 10 || j === 12)) {
+              TBL.rows[i].cells[j].setAttribute("class", "droppable-elem");
+              TBL.rows[i].cells[j].style.backgroundColor = "antiqueWhite";
+            }
+            // i=7: j=12（3回目ひく）
+            if (i === 7 && j === 12) {
               TBL.rows[i].cells[j].setAttribute("class", "droppable-elem");
               TBL.rows[i].cells[j].style.backgroundColor = "antiqueWhite";
             }
           }
         }
-        // 罫線
+        // 罫線（Underline areas）
+        // i=2: j=6,8,10
         if (TBL.rows[2]) {
-          for (let j = 6; j <= 8; j += 2) {
+          for (let j = 6; j <= 10; j += 2) {
             if (TBL.rows[2].cells[j]) {
               TBL.rows[2].cells[j].style.borderBottom = "solid black 2px";
             }
           }
         }
-        if (rows > 4 && TBL.rows[4]) {
-          for (let j = 8; j <= 10; j += 2) {
+        // i=4: j=8,10,12
+        if (TBL.rows[4]) {
+          for (let j = 8; j <= 12; j += 2) {
             if (TBL.rows[4].cells[j]) {
               TBL.rows[4].cells[j].style.borderBottom = "solid black 2px";
             }
           }
         }
-        if (rows > 6 && TBL.rows[6]) {
+        // i=6: j=10,12
+        if (TBL.rows[6]) {
           for (let j = 10; j <= 12; j += 2) {
             if (TBL.rows[6].cells[j]) {
               TBL.rows[6].cells[j].style.borderBottom = "solid black 2px";
