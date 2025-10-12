@@ -8,6 +8,14 @@ export function displayWriteTable(randomNumberArray) {
   // モードを取得
   const mode = document.getElementById("mode_select").value;
 
+  // デバッグ用ログ
+  console.log("=== displayWriteTable called ===");
+  console.log("Mode value:", mode);
+  console.log("Mode type:", typeof mode);
+  console.log("Mode length:", mode.length);
+  console.log("Mode === '':", mode === "");
+  console.log("randomNumberArray:", randomNumberArray);
+
   // テーブルをクリア（1行目は残す）
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < 13; j++) {
@@ -104,16 +112,59 @@ export function displayWriteTable(randomNumberArray) {
   if (mode === "") {
     console.log("自由配置モード - ドロップエリアと罫線を設定");
 
-    // ドロップエリア: i=0,2,3,4,5,6,7, j=6,7,8,9,10,11,12（すべての列）
-    const freeRows = [0, 2, 3, 4, 5, 6, 7];
+    // ドロップエリア設定
+    // i=0: j=6～12
+    if (TBL.rows[0]) {
+      for (let j = 6; j <= 12; j++) {
+        if (TBL.rows[0].cells[j]) {
+          TBL.rows[0].cells[j].setAttribute("class", "droppable-elem");
+          TBL.rows[0].cells[j].style.backgroundColor = "antiqueWhite";
+        }
+      }
+    }
 
-    for (let i of freeRows) {
+    // i=1,2: j=6～10
+    for (let i = 1; i <= 2; i++) {
       if (TBL.rows[i]) {
-        for (let j = 6; j <= 12; j++) {
+        for (let j = 6; j <= 10; j++) {
           if (TBL.rows[i].cells[j]) {
             TBL.rows[i].cells[j].setAttribute("class", "droppable-elem");
             TBL.rows[i].cells[j].style.backgroundColor = "antiqueWhite";
           }
+        }
+      }
+    }
+
+    // i=3,4: j=8～12
+    for (let i = 3; i <= 4; i++) {
+      if (TBL.rows[i]) {
+        for (let j = 8; j <= 12; j++) {
+          if (TBL.rows[i].cells[j]) {
+            TBL.rows[i].cells[j].setAttribute("class", "droppable-elem");
+            TBL.rows[i].cells[j].style.backgroundColor = "antiqueWhite";
+          }
+        }
+      }
+    }
+
+    // i=5,6: j=8～12
+    for (let i = 5; i <= 6; i++) {
+      if (TBL.rows[i]) {
+        for (let j = 8; j <= 12; j++) {
+          if (TBL.rows[i].cells[j]) {
+            TBL.rows[i].cells[j].setAttribute("class", "droppable-elem");
+            TBL.rows[i].cells[j].style.backgroundColor = "antiqueWhite";
+          }
+        }
+      }
+    }
+
+    // i=7: j=10～12
+    if (TBL.rows[7]) {
+      for (let j = 10; j <= 12; j++) {
+        if (TBL.rows[7].cells[j]) {
+          TBL.rows[7].cells[j].setAttribute("class", "droppable-elem");
+          TBL.rows[7].cells[j].style.backgroundColor = "antiqueWhite";
         }
       }
     }
@@ -146,6 +197,7 @@ export function displayWriteTable(randomNumberArray) {
       }
     }
 
+    console.log("✅ 自由配置モード処理完了 - returnします");
     return; // 自由配置モードの場合はここで終了
   }
 
@@ -463,54 +515,10 @@ export function displayWriteTable(randomNumberArray) {
         break;
 
       default:
-        // 自由配置モード（mode === ""）
-        if (mode === "") {
-          console.log("自由配置モード - ドロップエリアと罫線を設定");
-
-          // ドロップエリア: i=0,2,3,4,5,6,7, j=6,7,8,9,10,11,12（すべての列）
-          const freeRows = [0, 2, 3, 4, 5, 6, 7];
-
-          for (let i of freeRows) {
-            if (TBL.rows[i]) {
-              for (let j = 6; j <= 12; j++) {
-                if (TBL.rows[i].cells[j]) {
-                  TBL.rows[i].cells[j].setAttribute("class", "droppable-elem");
-                  TBL.rows[i].cells[j].style.backgroundColor = "antiqueWhite";
-                }
-              }
-            }
-          }
-
-          // 罫線
-          // i=2: j=6～10
-          if (TBL.rows[2]) {
-            for (let j = 6; j <= 10; j++) {
-              if (TBL.rows[2].cells[j]) {
-                TBL.rows[2].cells[j].style.borderBottom = "solid black 2px";
-              }
-            }
-          }
-
-          // i=4: j=8～12
-          if (TBL.rows[4]) {
-            for (let j = 8; j <= 12; j++) {
-              if (TBL.rows[4].cells[j]) {
-                TBL.rows[4].cells[j].style.borderBottom = "solid black 2px";
-              }
-            }
-          }
-
-          // i=6: j=10～12
-          if (TBL.rows[6]) {
-            for (let j = 10; j <= 12; j++) {
-              if (TBL.rows[6].cells[j]) {
-                TBL.rows[6].cells[j].style.borderBottom = "solid black 2px";
-              }
-            }
-          }
-        }
+        // その他のモード（mode 10-31以外）
         break;
     }
+    console.log("✅ 小数のわり算処理完了 (mode 10+) - returnします");
     return; // 小数のわり算の場合はここで終了
   }
 
@@ -669,10 +677,14 @@ export function displayWriteTable(randomNumberArray) {
         }
         break;
     }
+    console.log("✅ 整数のわり算処理完了 (mode 0-5) - returnします");
     return; // 整数のわり算の場合はここで終了
   }
 
   // 以下は汎用的な処理（上記のモードに該当しない場合）
+  console.log("⚠️ 汎用処理に到達 - mode:", mode);
+  console.log("⚠️ これは想定外の可能性があります");
+
   // 商の位置（0行目）を設定
   // 商は被除数の桁数と除数の桁数の関係で決まる
   const shoStartCol = hijosuPositions[hijosuDigits - shoDigits] || 6;

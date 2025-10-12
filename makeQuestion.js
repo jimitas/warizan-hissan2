@@ -18,133 +18,43 @@ function detectMode(hijosu, josu, sho, amari, wantsAmari) {
   const hijosuIsInt = isInteger(hijosu);
   const josuIsInt = isInteger(josu);
   const shoIsInt = isInteger(sho);
-  const amariIsInt = isInteger(amari);
-
-  const hijosuDec = getDecimalPlaces(hijosu);
-  const josuDec = getDecimalPlaces(josu);
-  const shoDec = getDecimalPlaces(sho);
-  const amariDec = getDecimalPlaces(amari);
 
   // デバッグログ
   console.log("=== 問題パターン判別 ===");
   console.log("被除数:", hijosu, "除数:", josu, "商:", sho, "あまり:", amari);
   console.log("wantsAmari:", wantsAmari);
-  console.log("整数判定 - 被除数:", hijosuIsInt, "除数:", josuIsInt, "商:", shoIsInt, "あまり:", amariIsInt);
-  console.log("小数桁数 - 被除数:", hijosuDec, "除数:", josuDec, "商:", shoDec, "あまり:", amariDec);
+  console.log("整数判定 - 被除数:", hijosuIsInt, "除数:", josuIsInt, "商:", shoIsInt);
 
-  // あまりを求める問題の場合
-  if (wantsAmari) {
-    console.log(">>> あまりを求める問題として判別中");
-    // 整数のわり算（mode 0～5）
-    if (hijosuIsInt && josuIsInt && shoIsInt) {
-      console.log("整数÷整数パターンを検査中");
-      if (hijosu < 100 && josu < 10 && sho < 10) {
-        console.log("→ mode 0 に該当");
-        return "0";
-      }
-      if (hijosu < 100 && josu < 10 && sho >= 10 && sho < 100) {
-        console.log("→ mode 1 に該当");
-        return "1";
-      }
-      if (hijosu >= 100 && josu < 10 && sho >= 10 && sho < 100) {
-        console.log("→ mode 2 に該当");
-        return "2";
-      }
-      if (hijosu < 100 && josu >= 10 && sho < 10) {
-        console.log("→ mode 3 に該当");
-        return "3";
-      }
-      if (hijosu >= 100 && josu >= 10 && sho < 10) {
-        console.log("→ mode 4 に該当");
-        return "4";
-      }
-      if (hijosu >= 100 && josu >= 10 && sho >= 10) {
-        console.log("→ mode 5 に該当");
-        return "5";
-      }
+  // 整数÷整数のパターン（mode 0～5）のみ判定
+  if (wantsAmari && hijosuIsInt && josuIsInt && shoIsInt) {
+    console.log("整数÷整数パターンを検査中");
+    if (hijosu < 100 && josu < 10 && sho < 10) {
+      console.log("→ mode 0 に該当");
+      return "0";
     }
-
-    // mode 31: 商を整数まで求めてあまりを出す（商が2桁整数、あまりが小数第1位）
-    console.log("mode 31 を検査中:");
-    console.log("  hijosuDec === 1?", hijosuDec === 1);
-    console.log("  josuIsInt?", josuIsInt);
-    console.log("  josu >= 3 && josu <= 9?", josu >= 3 && josu <= 9);
-    console.log("  shoIsInt?", shoIsInt);
-    console.log("  sho >= 34 && sho <= 95?", sho >= 34 && sho <= 95);
-    console.log("  amariDec === 1?", amariDec === 1);
-    console.log("  amari > 0?", amari > 0);
-
-    if (hijosuDec === 1 && josuIsInt && josu >= 3 && josu <= 9 && shoIsInt && sho >= 34 && sho <= 95 && amariDec === 1 && amari > 0) {
-      console.log("→ mode 31 に該当");
-      return "31";
+    if (hijosu < 100 && josu < 10 && sho >= 10 && sho < 100) {
+      console.log("→ mode 1 に該当");
+      return "1";
     }
-  }
-  // あまりを求めない問題の場合
-  else {
-    console.log(">>> あまりを求めない問題として判別中");
-
-    // 小数÷整数（mode 10～11）
-    console.log("小数÷整数を検査中:");
-    console.log("  hijosuDec >= 1?", hijosuDec >= 1);
-    console.log("  josuIsInt?", josuIsInt);
-    console.log("  shoDec >= 1?", shoDec >= 1);
-    console.log("  amari === 0?", amari === 0);
-
-    if (hijosuDec >= 1 && josuIsInt && shoDec >= 1 && amari === 0) {
-      if (hijosu >= 10 && hijosu < 100 && josu < 10) {
-        console.log("→ mode 10 に該当");
-        return "10";
-      }
-      if (hijosu >= 100 && josu >= 10) {
-        console.log("→ mode 11 に該当");
-        return "11";
-      }
+    if (hijosu >= 100 && josu < 10 && sho >= 10 && sho < 100) {
+      console.log("→ mode 2 に該当");
+      return "2";
     }
-
-    // 小数÷小数（mode 20～23）
-    console.log("小数÷小数を検査中:");
-    console.log("  hijosuDec >= 1?", hijosuDec >= 1);
-    console.log("  josuDec >= 1?", josuDec >= 1);
-    console.log("  amari === 0?", amari === 0);
-
-    if (hijosuDec >= 1 && josuDec >= 1 && amari === 0) {
-      // mode 20: ○.○÷○.○ 商が1桁整数、被除数<10
-      if (hijosuDec === 1 && josuDec === 1 && shoIsInt && sho < 10 && hijosu < 10) {
-        console.log("→ mode 20 に該当");
-        return "20";
-      }
-      // mode 21: ○○.○÷○.○ 商が1桁整数、被除数>=10
-      if (hijosuDec === 1 && josuDec === 1 && shoIsInt && sho < 10 && hijosu >= 10) {
-        console.log("→ mode 21 に該当");
-        return "21";
-      }
-      // mode 22: ○○.○÷○.○ 商が2桁整数
-      if (hijosuDec === 1 && josuDec === 1 && shoIsInt && sho >= 10 && sho < 100) {
-        console.log("→ mode 22 に該当");
-        return "22";
-      }
-      // mode 23: ○○.○÷○.○ 商が小数第1位まで
-      if (hijosuDec === 1 && josuDec === 1 && shoDec === 1) {
-        console.log("→ mode 23 に該当");
-        return "23";
-      }
+    if (hijosu < 100 && josu >= 10 && sho < 10) {
+      console.log("→ mode 3 に該当");
+      return "3";
     }
-
-    // mode 30: わり進み3回（被除数が小数第2位、商も小数第2位、除数は1桁整数、あまりなし）
-    console.log("mode 30 を検査中:");
-    console.log("  hijosuDec === 2?", hijosuDec === 2);
-    console.log("  josuIsInt?", josuIsInt);
-    console.log("  josu >= 3 && josu <= 9?", josu >= 3 && josu <= 9);
-    console.log("  shoDec === 2?", shoDec === 2);
-    console.log("  amari === 0?", amari === 0);
-
-    if (hijosuDec === 2 && josuIsInt && josu >= 3 && josu <= 9 && shoDec === 2 && amari === 0) {
-      console.log("→ mode 30 に該当");
-      return "30";
+    if (hijosu >= 100 && josu >= 10 && sho < 10) {
+      console.log("→ mode 4 に該当");
+      return "4";
+    }
+    if (hijosu >= 100 && josu >= 10 && sho >= 10) {
+      console.log("→ mode 5 に該当");
+      return "5";
     }
   }
 
-  console.log("→ どのモードにも該当しない → 自由配置モード");
+  console.log("→ 整数÷整数以外 → 自由配置モード");
   return "free"; // 自由配置モード
 }
 
@@ -251,7 +161,7 @@ export function makeQuestion(mondai_flag) {
   if (detectedMode === "free") {
     se.alert.currentTime = 0;
     se.alert.play();
-    alert("ドロップボックス、小数点の位置を自由に配置できますが、この枠内でうまく表現できないかもしれません。");
+    alert("ドロップエリアを自由配置モードにします。");
     // セレクトボックスは空白のままにする
     document.getElementById("mode_select").value = "";
   } else {
