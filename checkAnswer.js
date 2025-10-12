@@ -1,6 +1,6 @@
 import * as se from "./se.js";
 
-export function checkAnswer(sho, amari) {
+export function checkAnswer(sho, amari, hintSeen = false) {
   const mySho = Number(document.getElementById("sho-input").value);
   const myAmari = Number(document.getElementById("amari-input").value) || 0;
 
@@ -14,17 +14,24 @@ export function checkAnswer(sho, amari) {
     se.seikai2.currentTime = 0;
     se.seikai2.play();
 
-    // コインを追加
-    const img = document.createElement("img");
-    img.src = "./images/coin.png";
-    document.getElementById("score-pallet").appendChild(img);
+    // 答えを見ていない場合のみコインを追加
+    if (!hintSeen) {
+      // コインを追加
+      const img = document.createElement("img");
+      img.src = "./images/coin.png";
+      document.getElementById("score-pallet").appendChild(img);
 
-    // 現在のコイン数を取得して+1
-    const savedCoins = localStorage.getItem("wariHissan2CoinCount");
-    const coinCount = savedCoins ? parseInt(savedCoins, 10) : 0;
-    localStorage.setItem("wariHissan2CoinCount", coinCount + 1);
+      // 現在のコイン数を取得して+1
+      const savedCoins = localStorage.getItem("wariHissan2CoinCount");
+      const coinCount = savedCoins ? parseInt(savedCoins, 10) : 0;
+      localStorage.setItem("wariHissan2CoinCount", coinCount + 1);
 
-    alert("正解");
+      alert("正解");
+    } else {
+      // 答えを見た後の正解
+      alert("正解です！（答えを見たのでコインは増えません）");
+    }
+
     document.getElementById("hijosu-input").disabled = false;
     document.getElementById("josu-input").disabled = false;
     document.getElementById("sho-input").disabled = true;

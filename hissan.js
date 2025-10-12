@@ -18,6 +18,7 @@ export function hissan() {
 
   let mondai_flag = false; //問題を出したかどうかのフラグ判定
   let point_flag = false; //小数点が既に配置されているかのフラグ
+  let hint_flag = false; //答えを見たかどうかのフラグ
 
   // 初期化
   createTable();
@@ -97,6 +98,7 @@ export function hissan() {
     se.set.currentTime = 0;
     se.set.play();
     mondai_flag = true;
+    hint_flag = false; // 答えを見たフラグをリセット
     // 被乗数、除数、商、余りを決定し、代入する。
     const randomNumberArray = createRandomNumber();
     [hijosu, josu, sho, amari] = randomNumberArray;
@@ -121,6 +123,7 @@ export function hissan() {
 
       if (makeNumberArray) {
         [hijosu, josu, sho, amari, mondai_flag] = makeNumberArray;
+        hint_flag = false; // 答えを見たフラグをリセット
 
         // 問題に応じた最適なテーブルサイズを計算して再作成
         const mode = document.getElementById("mode_select").value;
@@ -142,6 +145,7 @@ export function hissan() {
     se.reset.currentTime = 0;
     se.reset.play();
     eraseTable();
+    hint_flag = false; // 答えを見たフラグをリセット
   });
 
   //全部の内容を消す
@@ -158,6 +162,7 @@ export function hissan() {
       point_flag = false;
       setupDecimalPointClick();
       mondai_flag = false;
+      hint_flag = false; // 答えを見たフラグをリセット
     }
   });
 
@@ -173,6 +178,9 @@ export function hissan() {
       }
       se.seikai1.currentTime = 0;
       se.seikai1.play();
+
+      // 答えを見たフラグを立てる
+      hint_flag = true;
 
       if (amari > 0) {
         alert("答えは、「　" + sho + "　あまり　" + amari + "　」です。自分でも計算してみましょう。");
@@ -196,6 +204,9 @@ export function hissan() {
       se.seikai1.currentTime = 0;
       se.seikai1.play();
 
+      // 答えを見たフラグを立てる
+      hint_flag = true;
+
       const hintNumber = [];
       hintNumber.push(...sho.toString());
 
@@ -214,7 +225,7 @@ export function hissan() {
         alert("「問題を出す」をおしてください。");
         return;
       }
-      mondai_flag = checkAnswer(sho, amari);
+      mondai_flag = checkAnswer(sho, amari, hint_flag);
     },
     false
   );
