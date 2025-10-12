@@ -11,26 +11,29 @@ export function checkAnswer(sho, amari, hintSeen = false) {
   const myAmariRounded = Math.round(myAmari * 100) / 100;
 
   if (myShoRounded === shoRounded && myAmariRounded === amariRounded) {
+    // iPadのために音声再生後にalertを表示
     se.seikai2.stop();
     se.seikai2.play();
 
-    // 答えを見ていない場合のみコインを追加
-    if (!hintSeen) {
-      // コインを追加
-      const img = document.createElement("img");
-      img.src = "./images/coin.png";
-      document.getElementById("score-pallet").appendChild(img);
+    setTimeout(() => {
+      // 答えを見ていない場合のみコインを追加
+      if (!hintSeen) {
+        // コインを追加
+        const img = document.createElement("img");
+        img.src = "./images/coin.png";
+        document.getElementById("score-pallet").appendChild(img);
 
-      // 現在のコイン数を取得して+1
-      const savedCoins = localStorage.getItem("wariHissan2CoinCount");
-      const coinCount = savedCoins ? parseInt(savedCoins, 10) : 0;
-      localStorage.setItem("wariHissan2CoinCount", coinCount + 1);
+        // 現在のコイン数を取得して+1
+        const savedCoins = localStorage.getItem("wariHissan2CoinCount");
+        const coinCount = savedCoins ? parseInt(savedCoins, 10) : 0;
+        localStorage.setItem("wariHissan2CoinCount", coinCount + 1);
 
-      alert("正解");
-    } else {
-      // 答えを見た後の正解
-      alert("正解です！（答えを見たのでコインは増えません）");
-    }
+        alert("正解");
+      } else {
+        // 答えを見た後の正解
+        alert("正解です！（答えを見たのでコインは増えません）");
+      }
+    }, 100);
 
     document.getElementById("hijosu-input").disabled = false;
     document.getElementById("josu-input").disabled = false;
