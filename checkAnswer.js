@@ -11,7 +11,7 @@ export function checkAnswer(sho, amari, hintSeen = false) {
   const myAmariRounded = Math.round(myAmari * 100) / 100;
 
   if (myShoRounded === shoRounded && myAmariRounded === amariRounded) {
-    se.seikai2.currentTime = 0;
+    se.seikai2.stop();
     se.seikai2.play();
 
     // 答えを見ていない場合のみコインを追加
@@ -39,7 +39,7 @@ export function checkAnswer(sho, amari, hintSeen = false) {
 
     return false;
   } else {
-    se.alert.currentTime = 0;
+    se.alert.stop();
     se.alert.play();
     alert("もう一度！");
     return true;
