@@ -269,72 +269,102 @@ export function hissan() {
 
     const lastRow = TBL.rows.length - 1;
 
-    // 商の行（0行目）の小数点列（7, 9, 11列目）にクリックイベントを追加
+    // 小数点操作のハンドラ関数（商の行用）
+    const handleShoDecimalClick = function(cell, col) {
+      if (point_flag === false) {
+        // 小数点がまだない場合、追加
+        cell.innerText = ".";
+        point_flag = true;
+        se.pi.currentTime = 0;
+        se.pi.play();
+      } else {
+        // 小数点が既にある場合
+        if (TBL.rows[0].cells[col].innerText === ".") {
+          // クリックされたセルに小数点がある場合、削除
+          TBL.rows[0].cells[col].innerText = "";
+          point_flag = false;
+          se.pi.currentTime = 0;
+          se.pi.play();
+        } else {
+          // 他のセルに小数点がある場合、全て削除してからこのセルに追加
+          TBL.rows[0].cells[7].innerText = "";
+          TBL.rows[0].cells[9].innerText = "";
+          TBL.rows[0].cells[11].innerText = "";
+          cell.innerText = ".";
+          se.pi.currentTime = 0;
+          se.pi.play();
+        }
+      }
+      myAnswerUpdate(sho);
+    };
+
+    // 小数点操作のハンドラ関数（あまりの行用）
+    const handleAmariDecimalClick = function(cell, col) {
+      const amariPointExists = TBL.rows[lastRow].cells[7].innerText === "." ||
+                               TBL.rows[lastRow].cells[9].innerText === "." ||
+                               TBL.rows[lastRow].cells[11].innerText === ".";
+
+      if (!amariPointExists) {
+        // あまり行に小数点がまだない場合、追加
+        cell.innerText = ".";
+        se.pi.currentTime = 0;
+        se.pi.play();
+      } else {
+        // あまり行に小数点が既にある場合
+        if (TBL.rows[lastRow].cells[col].innerText === ".") {
+          // クリックされたセルに小数点がある場合、削除
+          TBL.rows[lastRow].cells[col].innerText = "";
+          se.pi.currentTime = 0;
+          se.pi.play();
+        } else {
+          // 他のセルに小数点がある場合、全て削除してからこのセルに追加
+          TBL.rows[lastRow].cells[7].innerText = "";
+          TBL.rows[lastRow].cells[9].innerText = "";
+          TBL.rows[lastRow].cells[11].innerText = "";
+          cell.innerText = ".";
+          se.pi.currentTime = 0;
+          se.pi.play();
+        }
+      }
+      myAnswerUpdate(sho);
+    };
+
+    // 商の行（0行目）の小数点列（7, 9, 11列目）にイベントを追加
     [7, 9, 11].forEach(col => {
-      if (TBL.rows[0] && TBL.rows[0].cells[col]) {
-        TBL.rows[0].cells[col].style.cursor = "pointer";
-        TBL.rows[0].cells[col].addEventListener("click", function() {
-          if (point_flag === false) {
-            // 小数点がまだない場合、追加
-            this.innerText = ".";
-            point_flag = true;
-            se.pi.currentTime = 0;
-            se.pi.play();
-          } else {
-            // 小数点が既にある場合
-            if (TBL.rows[0].cells[col].innerText === ".") {
-              // クリックされたセルに小数点がある場合、削除
-              TBL.rows[0].cells[col].innerText = "";
-              point_flag = false;
-              se.pi.currentTime = 0;
-              se.pi.play();
-            } else {
-              // 他のセルに小数点がある場合、全て削除してからこのセルに追加
-              TBL.rows[0].cells[7].innerText = "";
-              TBL.rows[0].cells[9].innerText = "";
-              TBL.rows[0].cells[11].innerText = "";
-              this.innerText = ".";
-              se.pi.currentTime = 0;
-              se.pi.play();
-            }
-          }
-          myAnswerUpdate(sho);
+      const cell = TBL.rows[0] && TBL.rows[0].cells[col];
+      if (cell && !cell.dataset.decimalSetup) {
+        cell.style.cursor = "pointer";
+        cell.dataset.decimalSetup = "true";
+
+        // クリックイベント
+        cell.addEventListener("click", function(e) {
+          handleShoDecimalClick(this, col);
+        });
+
+        // タッチイベント（iPadでの反応改善）
+        cell.addEventListener("touchend", function(e) {
+          e.preventDefault(); // 合成クリックイベントを防ぐ
+          handleShoDecimalClick(this, col);
         });
       }
     });
 
-    // あまりの行（末行）の小数点列（7, 9, 11列目）にもクリックイベントを追加
+    // あまりの行（末行）の小数点列（7, 9, 11列目）にもイベントを追加
     [7, 9, 11].forEach(col => {
-      if (TBL.rows[lastRow] && TBL.rows[lastRow].cells[col]) {
-        TBL.rows[lastRow].cells[col].style.cursor = "pointer";
-        TBL.rows[lastRow].cells[col].addEventListener("click", function() {
-          const amariPointExists = TBL.rows[lastRow].cells[7].innerText === "." ||
-                                   TBL.rows[lastRow].cells[9].innerText === "." ||
-                                   TBL.rows[lastRow].cells[11].innerText === ".";
+      const cell = TBL.rows[lastRow] && TBL.rows[lastRow].cells[col];
+      if (cell && !cell.dataset.decimalSetup) {
+        cell.style.cursor = "pointer";
+        cell.dataset.decimalSetup = "true";
 
-          if (!amariPointExists) {
-            // あまり行に小数点がまだない場合、追加
-            this.innerText = ".";
-            se.pi.currentTime = 0;
-            se.pi.play();
-          } else {
-            // あまり行に小数点が既にある場合
-            if (TBL.rows[lastRow].cells[col].innerText === ".") {
-              // クリックされたセルに小数点がある場合、削除
-              TBL.rows[lastRow].cells[col].innerText = "";
-              se.pi.currentTime = 0;
-              se.pi.play();
-            } else {
-              // 他のセルに小数点がある場合、全て削除してからこのセルに追加
-              TBL.rows[lastRow].cells[7].innerText = "";
-              TBL.rows[lastRow].cells[9].innerText = "";
-              TBL.rows[lastRow].cells[11].innerText = "";
-              this.innerText = ".";
-              se.pi.currentTime = 0;
-              se.pi.play();
-            }
-          }
-          myAnswerUpdate(sho);
+        // クリックイベント
+        cell.addEventListener("click", function(e) {
+          handleAmariDecimalClick(this, col);
+        });
+
+        // タッチイベント（iPadでの反応改善）
+        cell.addEventListener("touchend", function(e) {
+          e.preventDefault(); // 合成クリックイベントを防ぐ
+          handleAmariDecimalClick(this, col);
         });
       }
     });
@@ -353,38 +383,47 @@ export function hissan() {
     // 列7, 9, 11: 被除数の小数点位置
     const decimalCols = [3, 7, 9, 11];
 
+    // 小数点操作のハンドラ関数
+    const handleRow1DecimalClick = function(cell) {
+      const currentText = cell.innerText;
+      const hasCrossedClass = cell.classList.contains("decimal-crossed");
+
+      // 状態遷移: 空白 → "." → "."(斜線付き) → 空白
+      if (currentText === "" || currentText === " ") {
+        // 空白 → 小数点
+        cell.innerText = ".";
+        cell.classList.remove("decimal-crossed");
+        se.pi.currentTime = 0;
+        se.pi.play();
+      } else if (currentText === "." && !hasCrossedClass) {
+        // 小数点 → 小数点(斜線付き)
+        cell.classList.add("decimal-crossed");
+        se.pi.currentTime = 0;
+        se.pi.play();
+      } else if (currentText === "." && hasCrossedClass) {
+        // 小数点(斜線付き) → 空白
+        cell.innerText = "";
+        cell.classList.remove("decimal-crossed");
+        se.pi.currentTime = 0;
+        se.pi.play();
+      }
+    };
+
     decimalCols.forEach(col => {
-      if (TBL.rows[1] && TBL.rows[1].cells[col]) {
-        const cell = TBL.rows[1].cells[col];
+      const cell = TBL.rows[1] && TBL.rows[1].cells[col];
+      if (cell && !cell.dataset.row1Setup) {
         cell.style.cursor = "pointer";
+        cell.dataset.row1Setup = "true";
 
-        // 既存のイベントリスナーを削除するために、新しい要素で置き換え
-        const newCell = cell.cloneNode(true);
-        cell.parentNode.replaceChild(newCell, cell);
+        // クリックイベント
+        cell.addEventListener("click", function(e) {
+          handleRow1DecimalClick(this);
+        });
 
-        newCell.addEventListener("click", function() {
-          const currentText = this.innerText;
-          const hasCrossedClass = this.classList.contains("decimal-crossed");
-
-          // 状態遷移: 空白 → "." → "."(斜線付き) → 空白
-          if (currentText === "" || currentText === " ") {
-            // 空白 → 小数点
-            this.innerText = ".";
-            this.classList.remove("decimal-crossed");
-            se.pi.currentTime = 0;
-            se.pi.play();
-          } else if (currentText === "." && !hasCrossedClass) {
-            // 小数点 → 小数点(斜線付き)
-            this.classList.add("decimal-crossed");
-            se.pi.currentTime = 0;
-            se.pi.play();
-          } else if (currentText === "." && hasCrossedClass) {
-            // 小数点(斜線付き) → 空白
-            this.innerText = "";
-            this.classList.remove("decimal-crossed");
-            se.pi.currentTime = 0;
-            se.pi.play();
-          }
+        // タッチイベント（iPadでの反応改善）
+        cell.addEventListener("touchend", function(e) {
+          e.preventDefault(); // 合成クリックイベントを防ぐ
+          handleRow1DecimalClick(this);
         });
       }
     });
