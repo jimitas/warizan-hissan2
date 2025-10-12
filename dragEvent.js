@@ -64,9 +64,37 @@ export function dragEvent() {
     //ドラッグ中のアイテムをカーソルの位置に追従
     var draggedElem = event.target;
     var touch = event.changedTouches[0];
+
+    // ドラッグ中の視覚的フィードバック（最初に設定）
+    if (!event.target.classList.contains("dragging")) {
+      event.target.style.zIndex = "1000";
+      event.target.style.opacity = "0.8";
+      event.target.classList.add("dragging");
+    }
+
     event.target.style.position = "fixed";
+    // 元の座標計算を使用（kake-hissanと同じ）
     event.target.style.top = touch.pageY - window.pageYOffset - draggedElem.offsetHeight / 2 + "px";
     event.target.style.left = touch.pageX - window.pageXOffset - draggedElem.offsetWidth / 2 + "px";
+
+    // pointer-events: noneを設定してelementFromPointで下の要素を取得できるように
+    event.target.style.pointerEvents = "none";
+
+    // 現在のタッチ位置の下にあるドロップ先をハイライト
+    var elementBelow = document.elementFromPoint(
+      touch.pageX - window.pageXOffset,
+      touch.pageY - window.pageYOffset
+    );
+
+    // 既存のハイライトを削除
+    var previousHighlight = document.querySelector(".drop-highlight");
+    if (previousHighlight) {
+      previousHighlight.classList.remove("drop-highlight");
+    }
+    // 新しいハイライトを追加
+    if (elementBelow && elementBelow.className && elementBelow.className.match(/droppable-elem/)) {
+      elementBelow.classList.add("drop-highlight");
+    }
   }
 
   //ドラッグ終了後の操作
@@ -75,17 +103,28 @@ export function dragEvent() {
     var droppedElem = event.target;
     var touch = event.changedTouches[0];
 
-    // ドラッグ中の操作のために変更していたスタイルを元に戻す
-    droppedElem.style.position = "";
-    droppedElem.style.top = "";
-    droppedElem.style.left = "";
-
-    // ドロップした位置にあるドロップ可能なエレメントに親子付けする
+    // pointer-events: noneが設定されているため、下にある要素を取得できる
     var newParentElem = document.elementFromPoint(
       touch.pageX - window.pageXOffset,
       touch.pageY - window.pageYOffset
     );
 
+    // ドラッグ中の操作のために変更していたスタイルを元に戻す
+    droppedElem.style.position = "";
+    droppedElem.style.top = "";
+    droppedElem.style.left = "";
+    droppedElem.style.zIndex = "";
+    droppedElem.style.opacity = "";
+    droppedElem.style.pointerEvents = "";
+    droppedElem.classList.remove("dragging");
+
+    // ハイライトを削除
+    var highlight = document.querySelector(".drop-highlight");
+    if (highlight) {
+      highlight.classList.remove("drop-highlight");
+    }
+
+    // ドロップした位置にあるドロップ可能なエレメントに親子付けする
     if (newParentElem && newParentElem.className && newParentElem.className.match(/droppable-elem/)) {
       newParentElem.appendChild(droppedElem);
       se.pi.stop();
