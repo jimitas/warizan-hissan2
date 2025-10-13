@@ -255,9 +255,7 @@ export function hissan() {
           }
         });
       }
-      div.addEventListener("touchstart", touchStartEvent, false);
-      div.addEventListener("touchmove", touchMoveEvent, false);
-      div.addEventListener("touchend", touchEndEvent, false);
+      // イベントリスナーはdocument全体で一度だけ設定するため、ここでは追加しない
       document.getElementById("num-pallet").appendChild(div);
     }
   }
@@ -435,12 +433,16 @@ export function hissan() {
 
   //ドラッグ開始の操作
   function touchStartEvent(event) {
+    // draggable-elem要素のみ処理
+    if (!event.target.classList.contains("draggable-elem")) return;
     //タッチによる画面スクロールを止める
     event.preventDefault();
   }
 
   //ドラッグ中の操作
   function touchMoveEvent(event) {
+    // draggable-elem要素のみ処理
+    if (!event.target.classList.contains("draggable-elem")) return;
     event.preventDefault();
     //ドラッグ中のアイテムをカーソルの位置に追従
     var draggedElem = event.target;
@@ -452,6 +454,8 @@ export function hissan() {
 
   //ドラッグ終了後の操作
   function touchEndEvent(event) {
+    // draggable-elem要素のみ処理
+    if (!event.target.classList.contains("draggable-elem")) return;
     event.preventDefault();
     //ドラッグ中の操作のために変更していたスタイルを元に戻す
     var droppedElem = event.target;
@@ -472,6 +476,11 @@ export function hissan() {
     numberSet();
     myAnswerUpdate(sho);
   }
+
+  // document全体にタッチイベントを設定（1回のみ）
+  document.addEventListener("touchstart", touchStartEvent, false);
+  document.addEventListener("touchmove", touchMoveEvent, false);
+  document.addEventListener("touchend", touchEndEvent, false);
 
   // ローカルストレージからコイン数を読み込み、画面に表示
   function loadCoins() {
