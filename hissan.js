@@ -176,17 +176,21 @@ export function hissan() {
         alert("「問題を出す」をおしてください。");
         return;
       }
-      se.seikai1.currentTime = 0;
+      se.seikai1.stop();
       se.seikai1.play();
 
       // 答えを見たフラグを立てる
       hint_flag = true;
 
-      if (amari > 0) {
-        alert("答えは、「　" + sho + "　あまり　" + amari + "　」です。自分でも計算してみましょう。");
-      } else {
-        alert("答えは、「　" + sho + "　」です。自分でも計算してみましょう。");
-      }
+      // iPadのために音声再生完了後にalertを表示
+      const duration = se.seikai1.duration() * 1000; // ミリ秒に変換
+      setTimeout(() => {
+        if (amari > 0) {
+          alert("答えは、「　" + sho + "　あまり　" + amari + "　」です。自分でも計算してみましょう。");
+        } else {
+          alert("答えは、「　" + sho + "　」です。自分でも計算してみましょう。");
+        }
+      }, duration);
     },
     false
   );
@@ -201,7 +205,7 @@ export function hissan() {
         alert("「問題を出す」をおしてください。");
         return;
       }
-      se.seikai1.currentTime = 0;
+      se.seikai1.stop();
       se.seikai1.play();
 
       // 答えを見たフラグを立てる
@@ -210,7 +214,11 @@ export function hissan() {
       const hintNumber = [];
       hintNumber.push(...sho.toString());
 
-      alert("商のはじめの位は「" + hintNumber[0] + "」です。");
+      // iPadのために音声再生完了後にalertを表示
+      const duration = se.seikai1.duration() * 1000; // ミリ秒に変換
+      setTimeout(() => {
+        alert("商のはじめの位は「" + hintNumber[0] + "」です。");
+      }, duration);
     },
     false
   );

@@ -11,10 +11,12 @@ export function checkAnswer(sho, amari, hintSeen = false) {
   const myAmariRounded = Math.round(myAmari * 100) / 100;
 
   if (myShoRounded === shoRounded && myAmariRounded === amariRounded) {
-    // iPadのために音声再生後にalertを表示
+    // iPadのために音声再生完了後にalertを表示
     se.seikai2.stop();
     se.seikai2.play();
 
+    // 音声の長さを取得してその分待つ
+    const duration = se.seikai2.duration() * 1000; // ミリ秒に変換
     setTimeout(() => {
       // 答えを見ていない場合のみコインを追加
       if (!hintSeen) {
@@ -33,7 +35,7 @@ export function checkAnswer(sho, amari, hintSeen = false) {
         // 答えを見た後の正解
         alert("正解です！（答えを見たのでコインは増えません）");
       }
-    }, 100);
+    }, duration);
 
     document.getElementById("hijosu-input").disabled = false;
     document.getElementById("josu-input").disabled = false;
