@@ -89,13 +89,13 @@ export function hissan() {
     // 問題の種類が選択されているかチェック
     const modeSelect = document.getElementById("mode_select");
     if (!modeSelect.value || modeSelect.value === "") {
-      se.alert.currentTime = 0;
+      se.alert.stop();
       se.alert.play();
       alert("問題の種類を選んでください。");
       return;
     }
 
-    se.set.currentTime = 0;
+    se.set.stop();
     se.set.play();
     mondai_flag = true;
     hint_flag = false; // 答えを見たフラグをリセット
@@ -142,7 +142,7 @@ export function hissan() {
 
   //数字を消す
   document.getElementById("btn-erase").addEventListener("click", () => {
-    se.reset.currentTime = 0;
+    se.reset.stop();
     se.reset.play();
     eraseTable();
     hint_flag = false; // 答えを見たフラグをリセット
@@ -150,12 +150,12 @@ export function hissan() {
 
   //全部の内容を消す
   document.getElementById("btn-clear").addEventListener("click", () => {
-    se.alert.currentTime = 0;
+    se.alert.stop();
     se.alert.play();
     const result = window.confirm("全部の内容を消しますか？");
 
     if (result) {
-      se.reset.currentTime = 0;
+      se.reset.stop();
       se.reset.play();
       clearInput();
       clearTable();
@@ -171,7 +171,7 @@ export function hissan() {
     "click",
     () => {
       if (mondai_flag === false) {
-        se.alert.currentTime = 0;
+        se.alert.stop();
         se.alert.play();
         alert("「問題を出す」をおしてください。");
         return;
@@ -200,7 +200,7 @@ export function hissan() {
     "click",
     () => {
       if (mondai_flag === false) {
-        se.alert.currentTime = 0;
+        se.alert.stop();
         se.alert.play();
         alert("「問題を出す」をおしてください。");
         return;
@@ -228,7 +228,7 @@ export function hissan() {
     "click",
     () => {
       if (mondai_flag === false) {
-        se.alert.currentTime = 0;
+        se.alert.stop();
         se.alert.play();
         alert("「問題を出す」をおしてください。");
         return;
@@ -243,7 +243,7 @@ export function hissan() {
   //関数　数字のセット
   function numberSet() {
     //数パレット内の数字を一旦消去
-    var ele = document.getElementById("num-pallet");
+    const ele = document.getElementById("num-pallet");
     while (ele.firstChild) {
       ele.removeChild(ele.firstChild);
     }
@@ -280,14 +280,17 @@ export function hissan() {
 
     // 商の行（0行目）の小数点列（7, 9, 11列目）にクリックイベントを追加
     [7, 9, 11].forEach(col => {
-      if (TBL.rows[0] && TBL.rows[0].cells[col]) {
-        TBL.rows[0].cells[col].style.cursor = "pointer";
-        TBL.rows[0].cells[col].addEventListener("click", function() {
+      const cell = TBL.rows[0] && TBL.rows[0].cells[col];
+      // 既にイベントリスナーが設定されている場合はスキップ（重複防止）
+      if (cell && !cell.dataset.decimalListenerSet) {
+        cell.dataset.decimalListenerSet = "true";
+        cell.style.cursor = "pointer";
+        cell.addEventListener("click", function() {
           if (point_flag === false) {
             // 小数点がまだない場合、追加
             this.innerText = ".";
             point_flag = true;
-            se.pi.currentTime = 0;
+            se.pi.stop();
             se.pi.play();
           } else {
             // 小数点が既にある場合
@@ -295,7 +298,7 @@ export function hissan() {
               // クリックされたセルに小数点がある場合、削除
               TBL.rows[0].cells[col].innerText = "";
               point_flag = false;
-              se.pi.currentTime = 0;
+              se.pi.stop();
               se.pi.play();
             } else {
               // 他のセルに小数点がある場合、全て削除してからこのセルに追加
@@ -303,7 +306,7 @@ export function hissan() {
               TBL.rows[0].cells[9].innerText = "";
               TBL.rows[0].cells[11].innerText = "";
               this.innerText = ".";
-              se.pi.currentTime = 0;
+              se.pi.stop();
               se.pi.play();
             }
           }
@@ -314,9 +317,12 @@ export function hissan() {
 
     // あまりの行（末行）の小数点列（7, 9, 11列目）にもクリックイベントを追加
     [7, 9, 11].forEach(col => {
-      if (TBL.rows[lastRow] && TBL.rows[lastRow].cells[col]) {
-        TBL.rows[lastRow].cells[col].style.cursor = "pointer";
-        TBL.rows[lastRow].cells[col].addEventListener("click", function() {
+      const cell = TBL.rows[lastRow] && TBL.rows[lastRow].cells[col];
+      // 既にイベントリスナーが設定されている場合はスキップ（重複防止）
+      if (cell && !cell.dataset.decimalListenerSet) {
+        cell.dataset.decimalListenerSet = "true";
+        cell.style.cursor = "pointer";
+        cell.addEventListener("click", function() {
           const amariPointExists = TBL.rows[lastRow].cells[7].innerText === "." ||
                                    TBL.rows[lastRow].cells[9].innerText === "." ||
                                    TBL.rows[lastRow].cells[11].innerText === ".";
@@ -324,14 +330,14 @@ export function hissan() {
           if (!amariPointExists) {
             // あまり行に小数点がまだない場合、追加
             this.innerText = ".";
-            se.pi.currentTime = 0;
+            se.pi.stop();
             se.pi.play();
           } else {
             // あまり行に小数点が既にある場合
             if (TBL.rows[lastRow].cells[col].innerText === ".") {
               // クリックされたセルに小数点がある場合、削除
               TBL.rows[lastRow].cells[col].innerText = "";
-              se.pi.currentTime = 0;
+              se.pi.stop();
               se.pi.play();
             } else {
               // 他のセルに小数点がある場合、全て削除してからこのセルに追加
@@ -339,7 +345,7 @@ export function hissan() {
               TBL.rows[lastRow].cells[9].innerText = "";
               TBL.rows[lastRow].cells[11].innerText = "";
               this.innerText = ".";
-              se.pi.currentTime = 0;
+              se.pi.stop();
               se.pi.play();
             }
           }
@@ -380,18 +386,18 @@ export function hissan() {
             // 空白 → 小数点
             this.innerText = ".";
             this.classList.remove("decimal-crossed");
-            se.pi.currentTime = 0;
+            se.pi.stop();
             se.pi.play();
           } else if (currentText === "." && !hasCrossedClass) {
             // 小数点 → 小数点(斜線付き)
             this.classList.add("decimal-crossed");
-            se.pi.currentTime = 0;
+            se.pi.stop();
             se.pi.play();
           } else if (currentText === "." && hasCrossedClass) {
             // 小数点(斜線付き) → 空白
             this.innerText = "";
             this.classList.remove("decimal-crossed");
-            se.pi.currentTime = 0;
+            se.pi.stop();
             se.pi.play();
           }
         });
@@ -400,7 +406,7 @@ export function hissan() {
   }
 
   //マウスでのドラッグを可能にする。
-  var dragged;
+  let dragged;
 
   /* events fired on the draggable target */
   document.addEventListener("drag", function (event) {}, false);
@@ -433,7 +439,7 @@ export function hissan() {
       if (event.target.className.match(/droppable-elem/)) {
         dragged.parentNode.removeChild(dragged);
         event.target.appendChild(dragged);
-        se.pi.currentTime = 0;
+        se.pi.stop();
         se.pi.play();
         numberSet();
         myAnswerUpdate(sho);
@@ -452,8 +458,8 @@ export function hissan() {
   function touchMoveEvent(event) {
     event.preventDefault();
     //ドラッグ中のアイテムをカーソルの位置に追従
-    var draggedElem = event.target;
-    var touch = event.changedTouches[0];
+    const draggedElem = event.target;
+    const touch = event.changedTouches[0];
     event.target.style.position = "fixed";
     event.target.style.top = touch.pageY - window.pageYOffset - draggedElem.offsetHeight / 2 + "px";
     event.target.style.left = touch.pageX - window.pageXOffset - draggedElem.offsetWidth / 2 + "px";
@@ -463,20 +469,20 @@ export function hissan() {
   function touchEndEvent(event) {
     event.preventDefault();
     //ドラッグ中の操作のために変更していたスタイルを元に戻す
-    var droppedElem = event.target;
+    const droppedElem = event.target;
     droppedElem.style.position = "";
     event.target.style.top = "";
     event.target.style.left = "";
     //ドロップした位置にあるドロップ可能なエレメントに親子付けする
-    var touch = event.changedTouches[0];
+    const touch = event.changedTouches[0];
     //スクロール分を加味した座標に存在するエレメントを新しい親とする
-    var newParentElem = document.elementFromPoint(touch.pageX - window.pageXOffset, touch.pageY - window.pageYOffset);
+    const newParentElem = document.elementFromPoint(touch.pageX - window.pageXOffset, touch.pageY - window.pageYOffset);
 
+    // ドロップ先がdroppable-elemクラスを持っている場合のみ、要素を移動
     if (newParentElem.className.match(/droppable-elem/)) {
-      // if (newParentElem.className == "droppable-elem") {
       newParentElem.appendChild(droppedElem);
     }
-    se.pi.currentTime = 0;
+    se.pi.stop();
     se.pi.play();
     numberSet();
     myAnswerUpdate(sho);
@@ -499,7 +505,7 @@ export function hissan() {
   // コインをリセット（計算問題による確認付き）
   const btnResetCoins = document.getElementById("btn-reset-coins");
   btnResetCoins.addEventListener("click", () => {
-    se.alert.currentTime = 0;
+    se.alert.stop();
     se.alert.play();
 
     // ランダムな計算問題を生成（3桁÷2桁で割り切れる問題）
@@ -525,7 +531,7 @@ export function hissan() {
       se.reset.play();
       alert("正解です！コインをリセットしました。");
     } else {
-      se.alert.currentTime = 0;
+      se.alert.stop();
       se.alert.play();
       alert(`不正解です。正しい答えは ${correctAnswer} でした。\nコインはリセットされませんでした。`);
     }

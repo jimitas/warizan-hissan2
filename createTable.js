@@ -9,15 +9,12 @@ export function calculateTableSize(hijosu, josu, sho, mode = "") {
   // 4行目: 2回目「かける」（10）
   // 5行目: 2回目「ひく」（0、罫線）← 3行目・4行目がセット、これが最終あまり
 
-  console.log("=== calculateTableSize called ===");
-  console.log("入力: hijosu=" + hijosu + ", josu=" + josu + ", sho=" + sho + ", mode=" + mode);
 
   let rows;
 
   // 自由配置モードの場合は8行固定
   if (mode === "") {
     rows = 8; // i=0～7まで必要
-    console.log("→ 自由配置モード: 8行固定");
   }
   // モード別の行数設定
   else {
@@ -32,9 +29,6 @@ export function calculateTableSize(hijosu, josu, sho, mode = "") {
     // 商が4桁: 10行（ただし4桁の場合は制限がかかるはず）
     rows = 2 + shoDigits * 2;
 
-    console.log("→ mode:" + mode + ", 商の桁数:" + shoDigits + "桁");
-    console.log("→ 計算式: 2 + " + shoDigits + " × 2 = " + rows + "行");
-    console.log("→ 内訳: 商(1行) + 式(1行) + (かける・ひく) × " + shoDigits + "回");
   }
 
   // 列数は固定13列

@@ -8,14 +8,6 @@ export function displayWriteTable(randomNumberArray) {
   // モードを取得
   const mode = document.getElementById("mode_select").value;
 
-  // デバッグ用ログ
-  console.log("=== displayWriteTable called ===");
-  console.log("Mode value:", mode);
-  console.log("Mode type:", typeof mode);
-  console.log("Mode length:", mode.length);
-  console.log("Mode === '':", mode === "");
-  console.log("randomNumberArray:", randomNumberArray);
-
   // テーブルをクリア（1行目は残す）
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < 13; j++) {
@@ -110,7 +102,6 @@ export function displayWriteTable(randomNumberArray) {
 
   // 自由配置モード（mode === ""）の処理
   if (mode === "") {
-    console.log("自由配置モード - ドロップエリアと罫線を設定");
 
     // ドロップエリア設定
     // i=0: j=6～12
@@ -197,7 +188,6 @@ export function displayWriteTable(randomNumberArray) {
       }
     }
 
-    console.log("✅ 自由配置モード処理完了 - returnします");
     return; // 自由配置モードの場合はここで終了
   }
 
@@ -207,7 +197,6 @@ export function displayWriteTable(randomNumberArray) {
     // 商の文字列を取得（mode 30, 31で使用）
     const shoStr = String(sho);
 
-    console.log("Mode:", mode, "Rows:", rows, "Sho:", sho, "Hijosu:", hijosu, "Josu:", josu);
 
     switch (mode) {
       case "10": // ○○.○÷○（わり進み2回）例: 11.5÷5=2.3
@@ -216,7 +205,6 @@ export function displayWriteTable(randomNumberArray) {
         // i=3: j=8,10
         // i=4: j=8,10
         // i=5: j=10
-        console.log("Mode 10 - Setting drop areas");
         for (let i = 0; i < rows; i++) {
           for (let j = 6; j <= 12; j += 2) {
             if ((i === 0 && (j === 8 || j === 10)) || // 商: j=8,10
@@ -518,7 +506,6 @@ export function displayWriteTable(randomNumberArray) {
         // その他のモード（mode 10-31以外）
         break;
     }
-    console.log("✅ 小数のわり算処理完了 (mode 10+) - returnします");
     return; // 小数のわり算の場合はここで終了
   }
 
@@ -677,13 +664,10 @@ export function displayWriteTable(randomNumberArray) {
         }
         break;
     }
-    console.log("✅ 整数のわり算処理完了 (mode 0-5) - returnします");
     return; // 整数のわり算の場合はここで終了
   }
 
   // 以下は汎用的な処理（上記のモードに該当しない場合）
-  console.log("⚠️ 汎用処理に到達 - mode:", mode);
-  console.log("⚠️ これは想定外の可能性があります");
 
   // 商の位置（0行目）を設定
   // 商は被除数の桁数と除数の桁数の関係で決まる
