@@ -1,6 +1,9 @@
 export function myAnswerUpdate(sho) {
+  console.log("🟢 myAnswerUpdate開始: sho =", sho, "型:", typeof sho);
   const TBL = document.getElementById("calc-table");
   const rows = TBL.rows.length;
+  console.log("🟢 TBL.rows.length =", rows);
+  console.log("🟢 TBL.rows[0] =", TBL.rows[0]);
 
   // 自身の回答で商の部分を更新する（小数点含む）
   const myShoArray = [];
@@ -14,18 +17,22 @@ export function myAnswerUpdate(sho) {
       myShoArray.push(cellContent);
     }
   }
+  console.log("🟢 myShoArray =", myShoArray);
 
   const mySho = myShoArray.length > 0 ? Number(myShoArray.join("")) : 0;
+  console.log("🟢 mySho =", mySho);
   document.getElementById("sho-input").value = mySho || "";
 
   // 正しく商を立てると色がつく実装
   const shoStr = String(sho);
+  console.log("🟢 shoStr =", shoStr);
 
   // 正解の商を桁ごとに配列化（小数点も含む）
   const shoArray = [];
   for (let i = 0; i < shoStr.length; i++) {
     shoArray.push(shoStr[i]);
   }
+  console.log("🟢 shoArray（正解） =", shoArray);
 
   // 商の各桁をチェック（小数点を考慮）
   let shoIndex = 0;
