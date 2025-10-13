@@ -426,10 +426,8 @@ export function hissan() {
         event.target.appendChild(dragged);
         se.pi.currentTime = 0;
         se.pi.play();
-        console.log("🔴 Windows dropイベント: sho =", sho, "型:", typeof sho);
         numberSet();
         myAnswerUpdate(sho);
-        console.log("🔴 Windows: myAnswerUpdate呼び出し完了");
       }
     },
     false
@@ -471,10 +469,8 @@ export function hissan() {
     }
     se.pi.currentTime = 0;
     se.pi.play();
-    console.log("🔵 iPad touchEndEvent: sho =", sho, "型:", typeof sho);
     numberSet();
     myAnswerUpdate(sho);
-    console.log("🔵 iPad: myAnswerUpdate呼び出し完了");
   }
 
   // ローカルストレージからコイン数を読み込み、画面に表示
