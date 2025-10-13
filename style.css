@@ -5,6 +5,7 @@ body {
   background: linear-gradient(180deg, #fef6e4 0%, #f4e4c1 50%, #ffeaa7 100%);
   min-height: 100vh;
   position: relative;
+  touch-action: manipulation; /* ダブルタップズームを無効化、スクロールは有効 */
 }
 
 /* 手描き風の点線パターン */
