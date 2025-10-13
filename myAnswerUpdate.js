@@ -10,7 +10,7 @@ export function myAnswerUpdate(sho) {
 
   // 商の行（0行目）から数字と小数点を読み取る（6～12列目）
   for (let j = 6; j <= 12; j++) {
-    const cellContent = TBL.rows[0].cells[j].innerText;
+    const cellContent = TBL.rows[0].cells[j].textContent.trim();  // innerText → textContent + trim()
     if (cellContent === ".") {
       myShoArray.push(".");
     } else if (cellContent !== "") {
@@ -37,7 +37,7 @@ export function myAnswerUpdate(sho) {
   // 商の各桁をチェック（小数点を考慮）
   let shoIndex = 0;
   for (let j = 6; j <= 12; j += 2) {
-    const cellContent = TBL.rows[0].cells[j].innerText;
+    const cellContent = TBL.rows[0].cells[j].textContent.trim();  // innerText → textContent + trim()
     if (cellContent !== "") {
       // 正解の商と比較
       if (shoIndex < shoArray.length && cellContent === shoArray[shoIndex]) {
@@ -50,7 +50,7 @@ export function myAnswerUpdate(sho) {
 
     // 小数点列もチェック（7, 9, 11列目）
     if (j === 6 || j === 8 || j === 10) {
-      const decimalCellContent = TBL.rows[0].cells[j + 1].innerText;
+      const decimalCellContent = TBL.rows[0].cells[j + 1].textContent.trim();  // innerText → textContent + trim()
       if (decimalCellContent === ".") {
         if (shoIndex < shoArray.length && shoArray[shoIndex] === ".") {
           TBL.rows[0].cells[j + 1].style.backgroundColor = "orangered";
@@ -68,7 +68,7 @@ export function myAnswerUpdate(sho) {
   // 最下行からあまりを読み取る（小数点も含む）
   const lastRow = rows - 1;
   for (let j = 6; j <= 12; j++) {
-    const cellContent = TBL.rows[lastRow].cells[j].innerText;
+    const cellContent = TBL.rows[lastRow].cells[j].textContent.trim();  // innerText → textContent + trim()
     if (cellContent === ".") {
       myAmariArray.push(".");
     } else if (cellContent !== "") {
