@@ -10,7 +10,7 @@ import { hissan } from "./hissan.js";
   debugDiv.id = "debug-console";
   debugDiv.style.cssText = `
     position: fixed;
-    top: 0;
+    bottom: 0;
     left: 0;
     width: 100%;
     max-height: 250px;
@@ -21,7 +21,7 @@ import { hissan } from "./hissan.js";
     font-size: 11px;
     z-index: 99999;
     padding: 5px;
-    border-bottom: 2px solid #00ff00;
+    border-top: 2px solid #00ff00;
     line-height: 1.3;
   `;
 
