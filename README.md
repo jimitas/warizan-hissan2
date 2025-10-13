@@ -1,6 +1,10 @@
-# 小数のわり算の筆算練習アプリ
+# 小数のわり算の筆算練習アプリ v1.0
 
 **jimitas.com**が提供する小学生向けの小数のわり算筆算練習ツールです。ドラッグ&ドロップ操作で楽しく学習できます。
+
+[![License](https://img.shields.io/badge/license-Educational-blue.svg)](https://jimitas.com)
+[![Version](https://img.shields.io/badge/version-1.0-green.svg)](https://github.com/jimitas/warizan-hissan2)
+[![Website](https://img.shields.io/badge/website-jimitas.com-orange.svg)](https://jimitas.com/wari-hissan2/)
 
 ## 🎯 アプリの特徴
 
@@ -138,9 +142,10 @@ wari-hissan2/
 
 ### セットアップ
 ```bash
-git clone https://github.com/jimitas/warizan-hissan.git
-cd warizan-hissan
-# ローカルサーバーで起動
+git clone https://github.com/jimitas/warizan-hissan2.git
+cd warizan-hissan2
+# ローカルサーバーで起動（例: Live Server、Python http.server など）
+# ブラウザで index.html を開く
 ```
 
 ### 主要関数
@@ -167,11 +172,25 @@ cd warizan-hissan
 ## 🌐 関連リンク
 
 - **開発元**: [jimitas.com](https://jimitas.com)
-- **GitHub**: [warizan-hissan](https://github.com/jimitas/warizan-hissan)
+- **アプリURL**: [https://jimitas.com/wari-hissan2/](https://jimitas.com/wari-hissan2/)
+- **GitHub**: [warizan-hissan2](https://github.com/jimitas/warizan-hissan2)
 
 ## 📞 お問い合わせ
 
 ご質問・ご要望は[jimitas.com](https://jimitas.com)までお気軽にお問い合わせください。
+
+## 📅 更新履歴
+
+### v1.0 (2024年)
+- 🎉 **本番リリース**
+- ✅ 14種類の問題モード完備
+- ✅ コードクリーンアップ完了（デバッグログ削除、未使用コード削除）
+- ✅ SEO対策完了（構造化データ、OGP、Twitter Card）
+- ✅ レスポンシブデザイン完備（スマホ・タブレット・PC対応）
+- ✅ 音声プリロード機能実装（遅延なし）
+- ✅ LocalStorageによるコイン永続化
+- ✅ 自動パターン認識機能
+- ✅ 自由配置モード対応
 
 ---
 
