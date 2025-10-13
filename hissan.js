@@ -183,7 +183,7 @@ export function hissan() {
       hint_flag = true;
 
       // iPadのために音声再生完了後にalertを表示
-      const duration = se.seikai1.duration() * 1000; // ミリ秒に変換
+      const duration = se.seikai1.duration() * 500; // 音声の半分の長さで表示
       setTimeout(() => {
         if (amari > 0) {
           alert("答えは、「　" + sho + "　あまり　" + amari + "　」です。自分でも計算してみましょう。");
@@ -215,7 +215,7 @@ export function hissan() {
       hintNumber.push(...sho.toString());
 
       // iPadのために音声再生完了後にalertを表示
-      const duration = se.seikai1.duration() * 1000; // ミリ秒に変換
+      const duration = se.seikai1.duration() * 500; // 音声の半分の長さで表示
       setTimeout(() => {
         alert("商のはじめの位は「" + hintNumber[0] + "」です。");
       }, duration);

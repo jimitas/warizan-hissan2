@@ -16,7 +16,7 @@ export function checkAnswer(sho, amari, hintSeen = false) {
     se.seikai2.play();
 
     // 音声の長さを取得してその分待つ
-    const duration = se.seikai2.duration() * 1000; // ミリ秒に変換
+    const duration = se.seikai2.duration() * 500; // 音声の半分の長さで表示
     setTimeout(() => {
       // 答えを見ていない場合のみコインを追加
       if (!hintSeen) {
