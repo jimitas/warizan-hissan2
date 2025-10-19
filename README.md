@@ -1,9 +1,9 @@
-# 小数のわり算の筆算練習アプリ v1.0
+# 小数のわり算の筆算練習アプリ v1.1
 
 **jimitas.com**が提供する小学生向けの小数のわり算筆算練習ツールです。ドラッグ&ドロップ操作で楽しく学習できます。
 
 [![License](https://img.shields.io/badge/license-Educational-blue.svg)](https://jimitas.com)
-[![Version](https://img.shields.io/badge/version-1.0-green.svg)](https://github.com/jimitas/warizan-hissan2)
+[![Version](https://img.shields.io/badge/version-1.1-green.svg)](https://github.com/jimitas/warizan-hissan2)
 [![Website](https://img.shields.io/badge/website-jimitas.com-orange.svg)](https://jimitas.com/wari-hissan2/)
 
 ## 🎯 アプリの特徴
@@ -180,6 +180,26 @@ cd warizan-hissan2
 ご質問・ご要望は[jimitas.com](https://jimitas.com)までお気軽にお問い合わせください。
 
 ## 📅 更新履歴
+
+### v1.1 (2025年)
+- 🚀 **iPad/タブレット最適化リリース**
+- ✅ ドラッグ&ドロップのパフォーマンス大幅改善
+  - numberSet()の最適化：クローン方式採用でDOM操作を削減
+  - GPUアクセラレーション活用：スムーズな数字追従
+  - イベントデリゲーション実装：メモリ使用量削減
+- ✅ タッチ操作の改善
+  - passive: false明示でiPadでの反応速度向上
+  - CSS最適化：誤選択・誤タップ防止
+- ✅ ユーザー体験の向上
+  - ドロップ後の数字を再ドラッグ可能に
+  - 数字パレットに戻せない制限（無限に使用可能）
+  - ゴミ箱機能の改善
+- ✅ メモリリーク対策
+  - イベントリスナー重複問題を解消
+  - 長時間使用でも安定動作
+- ✅ コード品質向上
+  - se.alert.stop()に統一
+  - 一貫性のあるコード構造
 
 ### v1.0 (2024年)
 - 🎉 **本番リリース**

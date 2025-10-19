@@ -109,7 +109,7 @@ function detectMode(hijosu, josu, sho, amari, wantsAmari) {
 
 export async function makeQuestion(mondai_flag) {
   if (mondai_flag) {
-    se.alert.currentTime = 0;
+    se.alert.stop();
     se.alert.play();
     alert("新しく作りたい場合は、「全部消す」をおしてください。");
     return;
@@ -120,7 +120,7 @@ export async function makeQuestion(mondai_flag) {
 
   // バリデーションチェック
   if (isNaN(hijosu) || isNaN(josu)) {
-    se.alert.currentTime = 0;
+    se.alert.stop();
     se.alert.play();
     alert("数値を入力してください。");
     clearInput();
@@ -128,7 +128,7 @@ export async function makeQuestion(mondai_flag) {
   }
 
   if (!(hijosu >= 0.01 && hijosu <= 999)) {
-    se.alert.currentTime = 0;
+    se.alert.stop();
     se.alert.play();
     alert("わられる数は（0.01～999）の範囲で入力してください。");
     clearInput();
@@ -136,7 +136,7 @@ export async function makeQuestion(mondai_flag) {
   }
 
   if (!(josu >= 0.1 && josu <= 99)) {
-    se.alert.currentTime = 0;
+    se.alert.stop();
     se.alert.play();
     alert("わる数は（0.1～99）の範囲で入力してください。");
     clearInput();
@@ -150,7 +150,7 @@ export async function makeQuestion(mondai_flag) {
   if (hijosuStr.includes(".")) {
     const hijosuDecimalDigits = hijosuStr.split(".")[1].length;
     if (hijosuDecimalDigits > 3) {
-      se.alert.currentTime = 0;
+      se.alert.stop();
       se.alert.play();
       alert("わられる数の小数は第3位までです。");
       clearInput();
@@ -161,7 +161,7 @@ export async function makeQuestion(mondai_flag) {
   if (josuStr.includes(".")) {
     const josuDecimalDigits = josuStr.split(".")[1].length;
     if (josuDecimalDigits > 1) {
-      se.alert.currentTime = 0;
+      se.alert.stop();
       se.alert.play();
       alert("わる数の小数は第1位までです。");
       clearInput();
@@ -197,7 +197,7 @@ export async function makeQuestion(mondai_flag) {
     const shoDigits = shoStr.replace(".", "").length;
 
     if (shoDigits > 3) {
-      se.alert.currentTime = 0;
+      se.alert.stop();
       se.alert.play();
       alert("ここでは、表しきれません。数値を変えてください。");
       clearInput();
@@ -212,7 +212,7 @@ export async function makeQuestion(mondai_flag) {
 
   // 自由配置モードの場合
   if (detectedMode === "free") {
-    se.alert.currentTime = 0;
+    se.alert.stop();
     se.alert.play();
     alert("一致する、ドロップエリアのパターンがみつからなかったので、自由配置モードにします。");
     // セレクトボックスは空白のままにする
@@ -222,7 +222,7 @@ export async function makeQuestion(mondai_flag) {
     document.getElementById("mode_select").value = detectedMode;
   }
 
-  se.set.currentTime = 0;
+  se.set.stop();
   se.set.play();
   mondai_flag = true;
 
